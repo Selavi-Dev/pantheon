@@ -6,6 +6,8 @@ Preserve existing vault organization. Add a namespace such as `Pantheon/` with `
 
 Agents submit a proposed record through a controlled API or operator-managed file exchange; Mnemosyne reconciles duplicates, verifies provenance and requests review before promotion. Preserve historical revisions and dissent. Themis audits evidence; authors must not approve their own high-risk work. No Obsidian write adapter is implemented in this starter kit.
 
+No live vault was available for this review. Vault paths, synchronization, plugin compatibility and promotion permissions remain untested. Supply narrowly scoped read/staging access through a reviewed adapter before expecting profiles to consume or update knowledge; the baseline disables general file tools. Keep the vault's executable plugins and scripts outside any agent-controlled promotion path.
+
 Systems of record: Linear for work orders, GitHub for code and releases, Drive for formal documents, Gmail for original messages, Notion for designated structured registers, Obsidian for durable knowledge and decision history. Link canonical IDs rather than maintaining independently writable copies of tasks.
 
 ## Grokbot / operations agent

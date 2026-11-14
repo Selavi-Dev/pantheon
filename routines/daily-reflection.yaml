@@ -1,0 +1,16 @@
+id: pantheon-self-improvement-daily
+owner: hermes
+enabled: false
+schedule:
+  cron: '30 20 * * *'
+  timezone: America/New_York
+mode: draft-only
+max_candidates_per_run: 1
+max_iterations: 1
+external_delivery: false
+prompt: >-
+  Review authorized completed administrative work since the last successful run.
+  Ask Argus for evidence, Socrates and Athena for competing explanations, and
+  Mnemosyne for a draft lesson. Deduplicate against open proposals and Grokbot
+  ownership. Return findings, evidence gaps and at most one candidate. Do not
+  execute operations, modify production, publish, schedule more work, or send messages.

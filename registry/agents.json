@@ -16,7 +16,8 @@
         "executive-escalation",
         "knowledge-capture",
         "pantheon-governance",
-        "source-verification"
+        "source-verification",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -39,7 +40,8 @@
         "opportunity-evaluation",
         "pantheon-governance",
         "source-verification",
-        "strategic-analysis"
+        "strategic-analysis",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -59,7 +61,8 @@
         "knowledge-capture",
         "pantheon-governance",
         "source-verification",
-        "opportunity-evaluation"
+        "opportunity-evaluation",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -80,7 +83,8 @@
         "knowledge-capture",
         "pantheon-governance",
         "release-governance",
-        "source-verification"
+        "source-verification",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -101,7 +105,8 @@
         "knowledge-capture",
         "pantheon-governance",
         "prototype-lab",
-        "source-verification"
+        "source-verification",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -121,7 +126,8 @@
         "executive-escalation",
         "knowledge-capture",
         "pantheon-governance",
-        "source-verification"
+        "source-verification",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -141,7 +147,8 @@
         "knowledge-capture",
         "memory-reconciliation",
         "pantheon-governance",
-        "source-verification"
+        "source-verification",
+        "self-improvement"
       ],
       "platforms": [
         "discord",
@@ -162,7 +169,8 @@
         "learning-curriculum",
         "pantheon-governance",
         "socratic-seminar",
-        "source-verification"
+        "source-verification",
+        "self-improvement"
       ],
       "platforms": [
         "discord",

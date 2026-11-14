@@ -1,0 +1,16 @@
+id: pantheon-self-improvement-weekly
+owner: hermes
+enabled: false
+schedule:
+  cron: '0 17 * * 0'
+  timezone: America/New_York
+mode: draft-only
+max_candidates_per_run: 1
+max_iterations: 1
+external_delivery: false
+prompt: >-
+  Review open improvement proposals and verified evaluation evidence. Ask Argus
+  for comparison and regression results, Themis for governance findings, Athena
+  and Socrates for prioritization and challenges, and Apollo for a draft report.
+  Produce one decision packet at most, including rollback and evidence gaps.
+  Do not approve on behalf of the administrator, deploy, send, or duplicate Grokbot.

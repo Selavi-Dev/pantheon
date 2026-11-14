@@ -4,6 +4,8 @@
 
 All profiles ship with no credentials, MCP servers or schedules. High-risk built-in toolsets (shell, file, browser, code execution, cron management, computer use, Discord actions/admin, connectors, catalog, Kanban and delegation) are disabled in the baseline. Image generation is disabled except for Apollo. These are denylist defaults, not a complete allowlist or security boundary. Hermes version changes can add capabilities; verify effective tools with `hermes -p pantheon-<agent> tools list` and negative tests. The native skills toolset may modify local skill state; canonical repo changes require operator review. Web and memory may contain private information; scope access and retention. Native messaging availability depends on session and upstream configuration.
 
+Profiles are not security sandboxes. `agent.disabled_toolsets` removes configured tool capabilities, but it does not isolate the operating system or authenticate approval. Current upstream tool-enable flows can remove covered denylist entries; inspect configuration and effective tools again after setup, enabling tools or upgrades. Distribution updates normally preserve existing `config.yaml`, so a new published baseline does not prove old installations adopted it. See [compatibility evidence and remaining runtime checks](HERMES_COMPATIBILITY.md).
+
 ## Intended capability matrix (requires integration)
 
 | Agent | Authorized input | Output | Prohibited / gated |
@@ -22,6 +24,7 @@ For every integration use a service identity with least-privilege credentials, s
 ## Defense in depth
 
 - OS users or containers: each execution identity receives only its mounted workspace; no host home, Docker socket, production SSH keys or vault secrets. A working directory is not a sandbox.
+- Gateway topology: multiplexed profiles share one process. Preserve separate host/container or OS-user boundaries when needed for confidential data; per-profile state separation does not replace them.
 - Provider data policy: verify retention, logging and processing for each model. Do not send confidential data to unapproved providers. Signal is not end-to-end encrypted through the model pipeline.
 - Gateway allowlists: numeric user IDs, restricted channels, separate credentials, no admin bot roles, no untrusted bot commands. Apply least privilege even if a gateway is misconfigured.
 - Approval boundary: authenticated human, immutable proposal digest, recipient, scope, expiry, revocation, single claim. Never infer approval from plain chat or agent output.

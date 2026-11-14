@@ -1,0 +1,16 @@
+{
+  "id": "SI-001",
+  "title": "Synthetic example: reduce duplicate handoff drafts",
+  "author": "hephaestus",
+  "workflow": "administrative-handoff",
+  "finding_key": "duplicate-draft",
+  "scope": "Sandbox handoff deduplication logic only",
+  "evidence_refs": ["synthetic:baseline-log"],
+  "hypothesis": "A stable handoff key reduces duplicate drafts",
+  "metric": "duplicate drafts per 100 handoffs",
+  "direction": "lower",
+  "minimum_improvement": 2,
+  "minimum_samples": 20,
+  "candidate_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "rollback": "Revert candidate branch; restore previous handoff logic"
+}

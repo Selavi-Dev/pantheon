@@ -4,7 +4,7 @@
 
 Pantheon is an independent, open-source starter kit for [Hermes Agent](https://github.com/NousResearch/hermes-agent). It separates executive administration, strategy, intelligence, assurance, architecture, creativity, knowledge and learning from operational execution. Designed for persistent profiles, mobile gateways and an Obsidian knowledge base.
 
-> v0.1.0 — starter kit / technical preview. Not affiliated with Nous Research. No live deployments, credentials, external connectors or personal data are included. The local governance ledger is a reference implementation, not a production authorization service.
+> v0.2.0 — integrated source candidate / technical preview; host acceptance is pending. Not affiliated with Nous Research. No live deployments, credentials, external connectors or personal data are included. The local governance ledger is a reference implementation, not a production authorization service.
 
 ## The roster
 
@@ -77,6 +77,27 @@ python -m pantheon.ledger --db .local/ledger.sqlite approve PTH-HO-0001 --digest
 
 See [governance](docs/governance.md) for the full lifecycle and threat model. Never grant agent processes write access to this database in a production deployment.
 
+## Self-improvement candidate
+
+The shared `self-improvement` skill is registered for all eight profiles alongside their existing skills. Each specialist retains its baseline role. Hermes coordinates bounded reflection and decision preparation: at most one draft candidate and one iteration per run. Independent evidence and governance review precede an authenticated human administrator's approval of the exact candidate digest and scope for a separate production deployment.
+
+A **role** assigns responsibility; a **routine** defines proposed cadence and purpose; a **skill** supplies procedural guidance; a **permission** is a capability enforced by the runtime. Adding the skill or a draft routine does not add permission. Existing skill grants are enumerated in [the agent registry](registry/agents.json); effective capabilities remain controlled by each unchanged profile `config.yaml` and host policy.
+
+| Agent | Role | Existing routine IDs | Improvement responsibility | Added skill | Permissions |
+|---|---|---|---|---|---|
+| Hermes | Chief of Staff | H-01–H-07 | Coordinate, deduplicate, draft decision packet | `self-improvement` | Baseline only |
+| Athena | Strategic Advisor | ATH-01–ATH-02 | Prioritize and compare hypotheses | `self-improvement` | Baseline only |
+| Argus | Intelligence Director | ARG-01–ARG-03 | Observe and evaluate independently | `self-improvement` | Baseline only |
+| Themis | Auditor General | THE-01–THE-02 | Review governance, permissions and risk | `self-improvement` | Baseline only |
+| Hephaestus | Systems Architect | HEP-01 | Draft sandbox candidate and tests | `self-improvement` | Baseline only |
+| Apollo | Creative Director | APO-01 | Draft reports from verified findings | `self-improvement` | Baseline only |
+| Mnemosyne | Knowledge Archivist | MNE-01–MNE-02 | Draft attributed Obsidian lessons | `self-improvement` | Baseline only |
+| Socrates | Intellectual Advisor | SOC-01–SOC-02 | Challenge root causes and assumptions | `self-improvement` | Baseline only |
+
+The additional Hermes routine definitions are `pantheon-self-improvement-daily` (20:30 daily) and `pantheon-self-improvement-weekly` (Sunday 17:00), both in `America/New_York`, disabled and local-only. Before any activation, check the complete host inventory and Grokbot ownership; use one scheduler, idempotent run IDs and no catch-up loops. These are source definitions, not installed schedules or enforcement guarantees.
+
+Baseline profiles disable terminal, file, code execution, cron, delegation and other toolsets listed in their configs. The skill supplies no connector, sandbox, repository or vault grant. A host operator must verify any existing scoped access before using it. Obsidian improvement memory consists of private draft lessons in a designated inbox; without existing authorized access, Mnemosyne returns a draft for an operator. Grokbot retains operational execution. See [integration status and acceptance requirements](docs/SELF_IMPROVEMENT_INTEGRATION.md).
+
 ## Repository map
 
 | Path | Contents |
@@ -87,7 +108,7 @@ See [governance](docs/governance.md) for the full lifecycle and threat model. Ne
 | `governance/` | Shared constitution and operational boundary contract |
 | `docs/` | Architecture, deployment, permissions, integrations, rollout and release guidance |
 | `schemas/`, `examples/` | Handoff and knowledge proposal contracts and sanitized examples |
-| `pantheon/` | Local reference governance ledger |
+| `pantheon/` | Local reference governance ledger and private single-writer improvement review workflow |
 | `scripts/`, `tests/` | Validation, installer, routine planner and unit tests |
 
 ## Guides
@@ -98,6 +119,7 @@ See [governance](docs/governance.md) for the full lifecycle and threat model. Ne
 - [Obsidian and Grokbot integration](docs/integrations.md)
 - [Governance and approval ledger](docs/governance.md)
 - [Rollout and acceptance](docs/rollout.md)
+- [Self-improvement integration and acceptance](docs/SELF_IMPROVEMENT_INTEGRATION.md)
 - [Publishing a release](docs/releasing.md)
 
 ## Upstream references

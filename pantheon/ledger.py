@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import os
 import sqlite3
 import time
 from datetime import datetime
@@ -40,7 +41,16 @@ def canonical(p):
 
 class Ledger:
     def __init__(self, path):
-        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        if str(path) != ':memory:':
+            Path(path).parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+            # Pre-create only new databases with private evidence permissions.
+            # Existing installations retain their operator-managed permissions.
+            try:
+                fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+            except FileExistsError:
+                pass
+            else:
+                os.close(fd)
         self.conn = sqlite3.connect(path, timeout=15, isolation_level=None)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript('''

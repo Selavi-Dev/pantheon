@@ -1,0 +1,8 @@
+{
+  "reviewer": "themis",
+  "candidate_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "governance_pass": true,
+  "grokbot_overlap": false,
+  "evidence_ref": "synthetic:governance-fixture",
+  "notes": "Synthetic example only; no production approval"
+}

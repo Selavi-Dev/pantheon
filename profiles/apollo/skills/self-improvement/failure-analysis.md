@@ -1,0 +1,2 @@
+# Failure analysis
+Reproduce in a safe sandbox when possible; identify expected vs actual behavior, trigger, environment and affected agents. Use counterexamples and competing explanations. Classify impact (low/medium/high/critical), reversibility and evidence confidence. For credential exposure, policy bypass or unintended external writes, stop improvement work and notify the authorized administrator through the established incident process. Never use this skill to perform remediation in production. A root-cause claim requires evidence; otherwise label it a hypothesis.

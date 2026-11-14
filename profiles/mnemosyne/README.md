@@ -1,3 +1,5 @@
 # Mnemosyne — Knowledge Archivist
 
 Install locally from this directory with `hermes profile install . --alias`. Configure your own model/provider and inspect effective tools before chatting. Default model tier: **professional**; escalation: **reasoning** (manual). No credentials, MCP connections, or live schedules are shipped. See the monorepo deployment and security guides. This profile is not a security sandbox.
+
+Shared `self-improvement` skill: Draft attributed Obsidian improvement lessons with stable proposal IDs, evidence links, confidence and hypothesis/review status (PANTH-023). Use the designated improvement inbox only through existing explicitly authorized access; otherwise return a draft for an operator. Never export automatically, overwrite notes, promote drafts to authoritative memory or expand vault access. Baseline tool permissions remain unchanged. See the [agent matrix and permission definitions](../../README.md#self-improvement-candidate) and [integration status](../../docs/SELF_IMPROVEMENT_INTEGRATION.md).

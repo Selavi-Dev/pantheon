@@ -1,0 +1,11 @@
+{
+  "evaluator": "argus",
+  "candidate_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "baseline": 10,
+  "candidate": 5,
+  "sample_count": 100,
+  "comparison_ref": "synthetic:paired-benchmark-fixture",
+  "regressions_pass": true,
+  "guardrails_pass": true,
+  "limitations": "Synthetic example only; no production evidence"
+}

@@ -201,6 +201,30 @@
       "delivery": "local",
       "enabled": false,
       "prompt": "Prepare a cross-disciplinary seminar; no duplicate study routine. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "pantheon-self-improvement-daily",
+      "owner": "hermes",
+      "purpose_key": "self-improvement.daily-reflection",
+      "schedule": "30 20 * * *",
+      "skill": "self-improvement",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Review authorized completed administrative work since the last successful run. Request evidence from Argus, competing explanations from Socrates and Athena, and a draft lesson from Mnemosyne only within existing grants. Deduplicate against open proposals and Grokbot ownership. Return findings, evidence gaps and at most one draft candidate in one iteration. Use one designated scheduler and an idempotent run ID derived from routine ID and scheduled America/New_York occurrence; skip already recorded runs and missed occurrences, with no catch-up loops or automatic retries. Draft only; no operational execution, production edits, publishing, new schedules or external messages. Missing evidence or authorization ends the run; production changes require separate authenticated administrator approval of exact candidate digest and scope.",
+      "catch_up": false,
+      "grace_minutes": 0
+    },
+    {
+      "id": "pantheon-self-improvement-weekly",
+      "owner": "hermes",
+      "purpose_key": "self-improvement.weekly-review",
+      "schedule": "0 17 * * 0",
+      "skill": "self-improvement",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Review open improvement proposals and verified evaluation evidence. Request independent comparison and regression evidence from Argus, governance findings from Themis, prioritization and challenges from Athena and Socrates, and a draft report from Apollo only within existing grants. Produce at most one decision packet and one draft candidate in one iteration, including rollback and evidence gaps. Deduplicate against open proposals, other routines and Grokbot ownership. Use one designated scheduler and an idempotent run ID derived from routine ID and scheduled America/New_York occurrence; skip already recorded runs and missed occurrences, with no catch-up loops or automatic retries. Local draft only; never approve on behalf of the administrator, deploy, send messages or execute Grokbot operations. Production changes require separate authenticated administrator approval of exact candidate digest and scope.",
+      "catch_up": false,
+      "grace_minutes": 0
     }
   ]
 }

@@ -13,5 +13,11 @@ def main():
         # Match canonical charter separation exactly.
         soul.write_text(shared+'\n\n'+suffix.lstrip('\n'))
         for s in a['skills']:
-            target=profile/'skills'/s/'SKILL.md'; target.parent.mkdir(parents=True,exist_ok=True); target.write_bytes((ROOT/'skills'/s/'SKILL.md').read_bytes())
+            source=ROOT/'skills'/s
+            for resource in source.rglob('*'):
+                if resource.is_symlink(): raise ValueError(f'Skill symlink is not distributable: {resource}')
+                if resource.is_file():
+                    target=profile/'skills'/s/resource.relative_to(source)
+                    target.parent.mkdir(parents=True,exist_ok=True)
+                    target.write_bytes(resource.read_bytes())
 if __name__=='__main__': main()
