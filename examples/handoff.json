@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "handoff_id": "PTH-HO-0001",
+  "idempotency_key": "example:project:architecture-review:v1",
+  "source_agent": "hephaestus",
+  "target_agent": "grokbot",
+  "entity": "example-organization",
+  "project": "example-project",
+  "objective": "Prepare an implementation work package for an isolated prototype",
+  "constraints": ["No production changes", "No external communications"],
+  "acceptance_criteria": ["Work package includes interfaces and test criteria"],
+  "evidence": [],
+  "due_at": null,
+  "authorization_required": true
+}

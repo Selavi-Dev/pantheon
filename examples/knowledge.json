@@ -1,0 +1,11 @@
+{
+  "id": "INT-EXAMPLE-001",
+  "title": "Illustrative research note",
+  "created_by": "argus",
+  "created_at": "2026-11-13T12:00:00Z",
+  "status": "proposed",
+  "classification": "internal",
+  "sources": [],
+  "claims": [{"text": "Example only: source evidence must be supplied before promotion.", "kind": "unknown"}],
+  "related": []
+}

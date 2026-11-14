@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pantheon knowledge proposal",
+  "type": "object",
+  "required": ["id", "title", "created_by", "created_at", "status", "classification", "sources", "claims"],
+  "properties": {
+    "id": {"type": "string"}, "title": {"type": "string"},
+    "created_by": {"type": "string"}, "created_at": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["proposed", "reviewed", "approved", "rejected", "superseded"]},
+    "classification": {"enum": ["public", "internal", "restricted"]},
+    "sources": {"type": "array", "items": {"type": "object", "required": ["uri", "retrieved_at"], "properties": {"uri": {"type": "string"}, "retrieved_at": {"type": "string", "format": "date-time"}}}},
+    "claims": {"type": "array", "items": {"type": "object", "required": ["text", "kind"], "properties": {"text": {"type": "string"}, "kind": {"enum": ["verified", "source-claim", "inference", "unknown"]}}}},
+    "related": {"type": "array", "items": {"type": "string"}}
+  }
+}

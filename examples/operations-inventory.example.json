@@ -1,0 +1,11 @@
+{
+  "routines": [
+    {
+      "id": "OPS-EXAMPLE",
+      "owner": "grokbot",
+      "purpose_key": "replace-with-canonical-purpose",
+      "enabled": true,
+      "description": "Example only; replace with actual complete inventory."
+    }
+  ]
+}
