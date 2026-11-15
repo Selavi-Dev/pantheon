@@ -48,7 +48,7 @@ pantheon configure --agent hermes --apply   # native setup
 pantheon status
 ```
 
-All eight profile resources, including the shared self-improvement skill, ship inside the wheel. Presets and commands are documented in [Installable release](docs/installable-release.md), including upgrade and backup caveats. Existing Hermes profiles are not replaced automatically. No gateways or routines activate during installation.
+All eight profile resources, including the shared self-improvement skill, ship inside the wheel. Presets and commands are documented in [Installable release](https://github.com/Selavi-Dev/pantheon/blob/main/docs/installable-release.md), including upgrade and backup caveats. Existing Hermes profiles are not replaced automatically. No gateways or routines activate during installation.
 
 ## Quick start (source checkout)
 
@@ -92,13 +92,13 @@ python -m pantheon.ledger --db .local/ledger.sqlite show PTH-HO-0001
 python -m pantheon.ledger --db .local/ledger.sqlite approve PTH-HO-0001 --digest <digest> --actor operator --ttl 3600
 ```
 
-See [governance](docs/governance.md) for the full lifecycle and threat model. Never grant agent processes write access to this database in a production deployment.
+See [governance](https://github.com/Selavi-Dev/pantheon/blob/main/docs/governance.md) for the full lifecycle and threat model. Never grant agent processes write access to this database in a production deployment.
 
 ## Self-improvement candidate
 
 The shared `self-improvement` skill is registered for all eight profiles alongside their existing skills. Each specialist retains its baseline role. Hermes coordinates bounded reflection and decision preparation: at most one draft candidate and one iteration per run. Independent evidence and governance review precede an authenticated human administrator's approval of the exact candidate digest and scope for a separate production deployment.
 
-A **role** assigns responsibility; a **routine** defines proposed cadence and purpose; a **skill** supplies procedural guidance; a **permission** is a capability enforced by the runtime. Adding the skill or a draft routine does not add permission. Existing skill grants are enumerated in [the agent registry](registry/agents.json); effective capabilities remain controlled by each unchanged profile `config.yaml` and host policy.
+A **role** assigns responsibility; a **routine** defines proposed cadence and purpose; a **skill** supplies procedural guidance; a **permission** is a capability enforced by the runtime. Adding the skill or a draft routine does not add permission. Existing skill grants are enumerated in [the agent registry](https://github.com/Selavi-Dev/pantheon/blob/main/registry/agents.json); effective capabilities remain controlled by each unchanged profile `config.yaml` and host policy.
 
 | Agent | Role | Existing routine IDs | Improvement responsibility | Added skill | Permissions |
 |---|---|---|---|---|---|
@@ -113,7 +113,7 @@ A **role** assigns responsibility; a **routine** defines proposed cadence and pu
 
 The additional Hermes routine definitions are `pantheon-self-improvement-daily` (20:30 daily) and `pantheon-self-improvement-weekly` (Sunday 17:00), both in `America/New_York`, disabled and local-only. Before any activation, check the complete host inventory and Grokbot ownership; use one scheduler, idempotent run IDs and no catch-up loops. These are source definitions, not installed schedules or enforcement guarantees.
 
-Baseline profiles disable terminal, file, code execution, cron, delegation and other toolsets listed in their configs. The skill supplies no connector, sandbox, repository or vault grant. A host operator must verify any existing scoped access before using it. Obsidian improvement memory consists of private draft lessons in a designated inbox; without existing authorized access, Mnemosyne returns a draft for an operator. Grokbot retains operational execution. See [integration status and acceptance requirements](docs/SELF_IMPROVEMENT_INTEGRATION.md).
+Baseline profiles disable terminal, file, code execution, cron, delegation and other toolsets listed in their configs. The skill supplies no connector, sandbox, repository or vault grant. A host operator must verify any existing scoped access before using it. Obsidian improvement memory consists of private draft lessons in a designated inbox; without existing authorized access, Mnemosyne returns a draft for an operator. Grokbot retains operational execution. See [integration status and acceptance requirements](https://github.com/Selavi-Dev/pantheon/blob/main/docs/SELF_IMPROVEMENT_INTEGRATION.md).
 
 ## Repository map
 
@@ -130,14 +130,14 @@ Baseline profiles disable terminal, file, code execution, cron, delegation and o
 
 ## Guides
 
-- [Architecture and group institutions](docs/architecture.md)
-- [Mobile deployment](docs/deployment.md)
-- [Security and permissions](docs/security.md)
-- [Obsidian and Grokbot integration](docs/integrations.md)
-- [Governance and approval ledger](docs/governance.md)
-- [Rollout and acceptance](docs/rollout.md)
-- [Self-improvement integration and acceptance](docs/SELF_IMPROVEMENT_INTEGRATION.md)
-- [Publishing a release](docs/releasing.md)
+- [Architecture and group institutions](https://github.com/Selavi-Dev/pantheon/blob/main/docs/architecture.md)
+- [Mobile deployment](https://github.com/Selavi-Dev/pantheon/blob/main/docs/deployment.md)
+- [Security and permissions](https://github.com/Selavi-Dev/pantheon/blob/main/docs/security.md)
+- [Obsidian and Grokbot integration](https://github.com/Selavi-Dev/pantheon/blob/main/docs/integrations.md)
+- [Governance and approval ledger](https://github.com/Selavi-Dev/pantheon/blob/main/docs/governance.md)
+- [Rollout and acceptance](https://github.com/Selavi-Dev/pantheon/blob/main/docs/rollout.md)
+- [Self-improvement integration and acceptance](https://github.com/Selavi-Dev/pantheon/blob/main/docs/SELF_IMPROVEMENT_INTEGRATION.md)
+- [Publishing a release](https://github.com/Selavi-Dev/pantheon/blob/main/docs/releasing.md)
 
 ## Upstream references
 
@@ -145,4 +145,4 @@ Baseline profiles disable terminal, file, code execution, cron, delegation and o
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [LICENSE](LICENSE). Keep secrets, live vaults, session history and private identifiers out of the repository.
+See [CONTRIBUTING.md](https://github.com/Selavi-Dev/pantheon/blob/main/CONTRIBUTING.md), [SECURITY.md](https://github.com/Selavi-Dev/pantheon/blob/main/SECURITY.md), and [LICENSE](https://github.com/Selavi-Dev/pantheon/blob/main/LICENSE). Keep secrets, live vaults, session history and private identifiers out of the repository.

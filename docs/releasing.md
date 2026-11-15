@@ -6,7 +6,7 @@ This monorepo contains eight native profile distributions. Install locally from 
 
 ## Gates before publication
 
-1. Confirm the intended Overflow organization and repository slug, maintainer ownership and MIT licensing. Earlier update text used `selavi-dev/pantheon`; it is historical packaging context, not an authorized remote. Do not create a remote from a guessed owner.
+1. Confirm the intended Overflow organization and repository slug, maintainer ownership and MIT licensing. Confirmed owner and repository: `Selavi-Dev/pantheon` (GitHub organization). Creating it and pushing remain separate approvals.
 2. Mount the existing Overflow directory and inspect its AGENTS.md, Git status, paths and infrastructure. Integrate on an isolated preparation branch without overwriting existing work. The current candidate is prepared in staging because the existing directory is unavailable here.
 3. Load the relevant Obsidian Project and Current State notes from the actual vault. Reconcile institutional decisions and record a reviewed handoff; never publish the vault or private operational inventory.
 4. Run `python scripts/validate.py`, `python -O scripts/validate.py`, `python scripts/sync_resources.py --check` and `python -m unittest discover -s tests -v`; build with `python -m build` and verify with `python scripts/check_artifacts.py --dist dist`. CI covers Python 3.10 and 3.12; a local 3.12 run is not evidence of the 3.10 job passing.

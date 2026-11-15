@@ -26,8 +26,14 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
-# [project.urls] is added once the public repository is confirmed (docs/pypi-publishing.md).
 dependencies = ["typer>=0.12,<1", "rich>=13,<16", "PyYAML>=6,<7"]
+
+[project.urls]
+Homepage = "https://github.com/Selavi-Dev/pantheon"
+Source = "https://github.com/Selavi-Dev/pantheon"
+Issues = "https://github.com/Selavi-Dev/pantheon/issues"
+Changelog = "https://github.com/Selavi-Dev/pantheon/blob/main/CHANGELOG.md"
+Documentation = "https://github.com/Selavi-Dev/pantheon/blob/main/docs/installable-release.md"
 
 [project.optional-dependencies]
 dev = ["build>=1.2,<2", "pytest>=8,<10"]
