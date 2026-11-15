@@ -47,7 +47,7 @@ def routines():
 
 GATEWAY_NOTE = ('A Hermes gateway is already running ({names}). Current Hermes multiplexes named profiles '
                 'from the default gateway, so profiles installed now may be served by it immediately. '
-                'Pantheon profiles ship no bot tokens or jobs; stop it first with `hermes gateway stop` '
+                'Pantheon profiles ship no bot tokens or jobs; stop it first with `hermes -p default gateway stop` '
                 'if nothing should be served.')
 
 def warn_running_gateway():
@@ -71,7 +71,7 @@ def install_plan(ids, apply, alias):
     served = sorted(set(i.running_gateways()) & {i.profile_name(a) for a in ids})
     if served:
         console.print('Now served by a running gateway: ' + ', '.join(served) + '. Pantheon started no gateway; '
-                      'run `hermes gateway stop` or remove them from the multiplexer if unintended.', markup=False, style='yellow')
+                      'run `hermes -p default gateway stop` or remove them from the multiplexer if unintended.', markup=False, style='yellow')
 
 @app.command()
 def install(preset: Optional[str] = None, agents: Optional[str] = None,

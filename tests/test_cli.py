@@ -110,6 +110,20 @@ class GatewayWarningTests(unittest.TestCase):
     def test_parses_running_profiles(self):
         with patch.object(i, 'run_native', side_effect=self.fake(PROFILE_LIST)):
             self.assertEqual(i.running_gateways(), ['default', 'pantheon-hermes'])
+    def test_alias_named_running_is_not_a_running_gateway(self):
+        out = "  pantheon-athena \u2014                            stopped      running      pantheon-athena@0.3.0\n"
+        with patch.object(i, 'run_native', side_effect=self.fake(out)):
+            self.assertEqual(i.running_gateways(), [])
+    def test_display_name_rows_use_canonical_id(self):
+        out = (" \u25c6Profile (default) anthropic/claude-opus-4.6    running      \u2014            \u2014\n"
+               "  Chief Of Staff (pantheon-hermes) \u2014           running      \u2014            pantheon-hermes@0.3.0\n"
+               "  pantheon-athena \u2014                            stopped      \u2014            pantheon-athena@0.3.0\n")
+        with patch.object(i, 'run_native', side_effect=self.fake(out)):
+            self.assertEqual(i.running_gateways(), ['default', 'pantheon-hermes'])
+    def test_warning_targets_the_default_host(self):
+        with patch.object(i, 'run_native', side_effect=self.fake(PROFILE_LIST)):
+            result = self.runner.invoke(app, ['doctor'])
+            self.assertIn('hermes -p default gateway stop', ' '.join(result.output.split()))
     def test_no_hermes_means_no_warning(self):
         with patch.object(i, 'run_native', side_effect=RuntimeError('Hermes CLI not found')):
             self.assertEqual(i.running_gateways(), [])
