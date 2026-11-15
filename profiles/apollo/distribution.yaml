@@ -1,5 +1,6 @@
 name: pantheon-apollo
 version: 0.3.0
+hermes_requires: '>=0.23.1'
 description: 'Pantheon: Creative Director'
 license: MIT
 author: Pantheon contributors

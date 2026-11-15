@@ -1,5 +1,6 @@
 name: pantheon-argus
 version: 0.3.0
+hermes_requires: '>=0.23.1'
 description: 'Pantheon: Intelligence Director'
 license: MIT
 author: Pantheon contributors

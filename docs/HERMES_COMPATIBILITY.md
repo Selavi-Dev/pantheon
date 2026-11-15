@@ -8,13 +8,31 @@ Review date: 2026-11-13 America/New_York (2026-11-14 UTC). Scope: Pantheon v0.2.
 
 Latest upstream release observed: [v0.23.1](https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.1). Upstream `main` revision captured through GitHub: [652c0c9cd06bd8706d14d60ddfb69cc66ccdd8ab](https://github.com/NousResearch/hermes-agent/commit/652c0c9cd06bd8706d14d60ddfb69cc66ccdd8ab), commit timestamp 2026-11-14T01:47:22Z. Current website documentation and current `main` are moving targets; this does not establish that every reviewed feature exists in the released v0.23.1 package. The release page itself distinguishes the patch release from fuller upcoming release notes. Pantheon version and Hermes version are independent.
 
+## Runtime acceptance — v0.3.0 (2026-11-14)
+
+First live run against a real Hermes runtime, in a disposable Linux home directory (no credentials, models, gateways or Obsidian). Hermes from upstream `main` at commit `b2c6bc4e1e18`, cloned blobless as `scripts/install.sh` does; Hermes reports `v0.23.1+7746.gb2c6bc4 (2026.9.24)`, base version `0.23.1`. Python 3.13.
+
+| Check | Result |
+|---|---|
+| `pantheon doctor` | Passes; reports the real Hermes version. |
+| `pantheon install --preset full --apply` | All eight profiles installed through Hermes's own per-profile confirmation; manifests show `Requires: Hermes >=0.23.1`. |
+| Bundled skills | Every profile received its granted skills, including all five `self-improvement` files. |
+| Effective tools (`hermes -p pantheon-athena tools list`) | Deny-list applied: terminal, file, browser, code_execution, cronjob, computer_use, delegation, connections, kanban, x_search, image_gen, video_gen disabled. Enabled: web, vision, tts, skills, todo, memory, session_search, clarify. |
+| Jobs and gateways | No cron jobs in any profile; every gateway `stopped`. |
+| Re-install of an existing profile | Refused by Hermes without `--force`; Pantheon exits 1. |
+| Native update | Preserved a memory file and a user-added skill; restored an edited distribution-owned skill; `config.yaml` preserved. |
+| `pantheon backup` | Export created with mode 0600; no `.env` or `auth.json` inside. |
+| `hermes_requires` | `>=0.23.1` accepted on 0.23.1; `>=0.24.0` refused with a clear error. |
+
+Caveats: a shallow (`--depth 1`) Hermes clone has no release tags and reports base version `unknown`; Hermes then refuses every distribution that sets `hermes_requires`. Official installs are blobless with tags and are unaffected. Not tested: macOS, native Windows/WSL, Docker or Nix Hermes builds, model setup (`pantheon configure`), live chat, gateways, Bot Mode, Obsidian, or a tagged Hermes release package.
+
 ## Findings and required follow-up
 
 | Area | Finding | Action |
 |---|---|---|
 | Gateway topology | `docs/deployment.md` now distinguishes host startup from named-profile park/unpark operations. Current dedicated multi-profile documentation and source default to one host multiplexer. New standalone named-profile starts/installs can be refused with exit 78. A named-profile start can instead unpark an already served profile. | The corrected deployment guide covers host startup, served/parked status and shared restart impact. Inventory the host and existing services before following it. Do not automatically run migration or add `--force`. Keep separate OS/container identities where confidentiality requires a kernel boundary. |
 | Upstream documentation conflict | The current Telegram page still recommends one gateway per profile, while the dedicated multi-profile guide and current gateway guard implement multiplexing. | Cite the dedicated topology guide and exact installed `gateway --help`/runtime behavior. Do not copy the Telegram lifecycle example unqualified. |
-| Distribution manifests | All eight manifests have valid-looking names, descriptions, authors and MIT identifiers. All eight now declare Pantheon `version: 0.2.0`; they omit `hermes_requires`. | Add a Hermes requirement only after establishing the earliest runtime actually tested. Do not invent a minimum from the documentation examples. |
+| Distribution manifests | All eight manifests have valid-looking names, descriptions, authors and MIT identifiers. All eight declare Pantheon `version: 0.3.0` and `hermes_requires: '>=0.23.1'`, the earliest runtime actually tested (see runtime acceptance above). | Raise the minimum only after testing; keep a single comparison, the only form Hermes accepts. |
 | Installer source layout | `scripts/install_profiles.py` correctly selects a local directory with a root `distribution.yaml` and uses supported `--alias`. Installing the monorepo root is unsupported by this manifest layout. | Retain the local per-profile installation path. For separate remotely installable distributions, publish each profile as a repository root. Do not claim GitHub subdirectory URLs work. |
 | Capability configuration | Every denylist toolset name in the baseline is present in current upstream toolsets. `agent.disabled_toolsets` is recognized across CLI and gateway platforms; `gateway.bot_loop_guard` with these fields is supported. | Preserve the denylist and test the actual tools after setup. A tool enable operation can remove covered entries from the denylist; re-inspect after configuration changes. This is mutable configuration, not an authorization service. |
 | Cron command syntax | All 21 scheduled routine command lines accepted current pinned upstream parser definitions: positional schedule/prompt plus `--name`, `--skill`, `--timezone`, `--deliver local`, `--paused`. The event-triggered entry with a null schedule produces no command. | Retain paused local creation. Verify semantics on installed Hermes before manually running even a canary. A paused job can still be explicitly run by an operator. |

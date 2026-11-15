@@ -63,6 +63,7 @@ def main():
         require((profile / 'SOUL.md').read_text(encoding='utf-8').startswith(charter + '\n'), f'{aid}: charter drift')
         manifest = (profile / 'distribution.yaml').read_text(encoding='utf-8')
         require(f'name: {agent["profile"]}\n' in manifest and f'version: {version}\n' in manifest, f'{aid}: manifest/version drift')
+        require(re.search(r"^hermes_requires: '>=\d+\.\d+\.\d+'$", manifest, re.M) is not None, f'{aid}: missing single-comparison hermes_requires')
         require((profile / 'config.yaml').is_file() and (profile / 'LICENSE').is_file(), f'{aid}: missing configuration/license')
         grants = agent['skills']
         require(len(grants) == len(set(grants)) and 'self-improvement' in grants, f'{aid}: duplicate/missing shared grant')
