@@ -51,11 +51,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install from TestPyPI (dependencies from PyPI)
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-dist
+          path: built/
+      - name: Download this run's wheel from TestPyPI only and compare bytes
         run: |
-          for i in 1 2 3 4 5 6; do
-            python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "pantheon-agent==$(curl -s https://test.pypi.org/pypi/pantheon-agent/json | python -c 'import sys,json;print(json.load(sys.stdin)["info"]["version"])')" && break
+          set -eu
+          wheel=$(ls built/*.whl)
+          version=$(basename "$wheel" | cut -d- -f2)
+          for i in 1 2 3 4 5 6 7 8; do
+            if python -m pip download --no-deps --only-binary :all: --index-url https://test.pypi.org/simple/ \
+                 "pantheon-agent==$version" -d fetched/; then break; fi
             sleep 30
           done
-      - run: pantheon version
-      - run: pantheon install --preset full
+          test -f "fetched/$(basename "$wheel")"
+          cmp "$wheel" "fetched/$(basename "$wheel")"
+          echo "TestPyPI serves the exact wheel this run built (pantheon-agent $version)."
+      - name: Install that wheel file (dependencies from PyPI) and run the CLI
+        run: |
+          python -m pip install fetched/*.whl
+          pantheon version
+          pantheon install --preset full
