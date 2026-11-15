@@ -2,7 +2,7 @@
 
 ## Install from a release candidate
 
-Install upstream Hermes first, with profile-distribution support. Use `hermes profile install --help` and `hermes profile update --help` to check capabilities. Every profile declares `hermes_requires: '>=0.23.1'`, the earliest Hermes tested (see [Hermes compatibility](HERMES_COMPATIBILITY.md)). Install Hermes with its official installer; a shallow git clone reports version `unknown` and Hermes will refuse the profiles. Python 3.10+; Windows users should follow the upstream Hermes runtime guidance (WSL may be appropriate). The CLI itself is cross-platform Python; live Hermes acceptance has only been run on Linux.
+Install upstream Hermes first, with profile-distribution support. Use `hermes profile install --help` and `hermes profile update --help` to check capabilities. Every profile declares `hermes_requires: '>=0.23.1'`, the earliest Hermes tested (see [Hermes compatibility](HERMES_COMPATIBILITY.md)). Install Hermes with its official installer; a shallow git clone reports version `unknown` and Hermes will refuse the profiles. Python 3.10+; Windows users should follow the upstream Hermes runtime guidance (WSL may be appropriate). The CLI itself is cross-platform Python; live Hermes acceptance has been run on Linux and Windows WSL2; macOS is covered by CI only and is untested against a live Hermes install.
 
 ```sh
 python -m venv .venv
