@@ -1,0 +1,77 @@
+{
+  "extension_version": "0.3.0",
+  "status": "source_integrated_runtime_unverified",
+  "skill": "self-improvement",
+  "owner": "hermes",
+  "agents": {
+    "hermes": {
+      "work_orders": [
+        "PANTH-020",
+        "PANTH-028"
+      ],
+      "responsibility": "coordinate, deduplicate, assemble decision packets; no deployment approval"
+    },
+    "athena": {
+      "work_orders": [
+        "PANTH-022"
+      ],
+      "responsibility": "strategic prioritization, alternative hypotheses"
+    },
+    "argus": {
+      "work_orders": [
+        "PANTH-021",
+        "PANTH-027"
+      ],
+      "responsibility": "observe, independently evaluate and monitor regressions"
+    },
+    "themis": {
+      "work_orders": [
+        "PANTH-025"
+      ],
+      "responsibility": "governance review, permissions and risk"
+    },
+    "hephaestus": {
+      "work_orders": [
+        "PANTH-024",
+        "PANTH-027"
+      ],
+      "responsibility": "sandbox candidate development and tests"
+    },
+    "apollo": {
+      "work_orders": [
+        "PANTH-026"
+      ],
+      "responsibility": "draft verified improvement reports; no send"
+    },
+    "mnemosyne": {
+      "work_orders": [
+        "PANTH-023"
+      ],
+      "responsibility": "draft and curate attributed Obsidian lessons for designated inbox; export only through existing explicitly authorized access"
+    },
+    "socrates": {
+      "work_orders": [
+        "PANTH-022"
+      ],
+      "responsibility": "challenge assumptions and root causes"
+    }
+  },
+  "production_approval": "authenticated_administrator_outside_skill",
+  "routines": [
+    "pantheon-self-improvement-daily",
+    "pantheon-self-improvement-weekly"
+  ],
+  "external_delivery": false,
+  "automatic_deployment": false,
+  "permissions": "existing_profile_config_unchanged",
+  "mode": "draft-only",
+  "max_candidates_per_run": 1,
+  "max_iterations": 1,
+  "scheduler": {
+    "activation": "disabled_pending_administrator_approval",
+    "instances": 1,
+    "idempotency": "routine_id_and_scheduled_occurrence",
+    "catch_up": false,
+    "enforcement": "host_acceptance_pending"
+  }
+}

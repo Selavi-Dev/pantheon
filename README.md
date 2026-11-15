@@ -4,7 +4,7 @@
 
 Pantheon is an independent, open-source starter kit for [Hermes Agent](https://github.com/NousResearch/hermes-agent). It separates executive administration, strategy, intelligence, assurance, architecture, creativity, knowledge and learning from operational execution. Designed for persistent profiles, mobile gateways and an Obsidian knowledge base.
 
-> v0.2.0 — integrated source candidate / technical preview; host acceptance is pending. Not affiliated with Nous Research. No live deployments, credentials, external connectors or personal data are included. The local governance ledger is a reference implementation, not a production authorization service.
+> v0.3.0 — installable technical preview (v0.2.0 source plus the Python CLI and wheel); host acceptance is pending. Not affiliated with Nous Research. No live deployments, credentials, external connectors or personal data are included. The local governance ledger is a reference implementation, not a production authorization service.
 
 ## The roster
 
@@ -35,7 +35,22 @@ flowchart TD
   T -. independent audit .-> H
 ```
 
-## Quick start
+## Installable CLI (v0.3.0)
+
+Install the release wheel into a virtual environment, or from a source checkout with `python -m pip install .`. Hermes must be installed separately. The package is not yet published on PyPI.
+
+```bash
+pantheon version
+pantheon init --preset executive             # dry run
+pantheon doctor                             # checks native prerequisites
+pantheon install --preset executive --apply # native confirmation per profile
+pantheon configure --agent hermes --apply   # native setup
+pantheon status
+```
+
+All eight profile resources, including the shared self-improvement skill, ship inside the wheel. Presets and commands are documented in [Installable release](docs/installable-release.md), including upgrade and backup caveats. Existing Hermes profiles are not replaced automatically. No gateways or routines activate during installation.
+
+## Quick start (source checkout)
 
 Prerequisites: Python 3.10+, Git, a current Hermes Agent install with `hermes profile install` support, and your own model credentials. Install Hermes using its upstream instructions. No dependency installation or network calls are made by Pantheon's validation tools.
 

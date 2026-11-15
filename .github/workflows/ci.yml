@@ -6,15 +6,29 @@ permissions:
   contents: read
 jobs:
   validation:
-    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python: ['3.10', '3.12']
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
+      - run: python -m pip install ".[dev]" tzdata
       - run: python scripts/validate.py
       - run: python -O scripts/validate.py
+      - run: python scripts/sync_resources.py --check
       - run: python -m unittest discover -s tests -v
+      - name: Legacy Windows encoding (PYTHONUTF8=0)
+        if: runner.os == 'Windows'
+        env:
+          PYTHONUTF8: '0'
+        run: python -m unittest discover -s tests -v
+      - run: python -m build
+      - run: python scripts/build_distributions.py --output release-artifacts/profiles
+      - run: python scripts/check_artifacts.py --dist dist
+      - run: pantheon version
+      - run: pantheon install --preset full

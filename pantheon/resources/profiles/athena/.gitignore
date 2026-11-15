@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+auth.json*
+memories/
+sessions/
+logs/
+state.db*
+cron/
+platforms/
+home/
+local/

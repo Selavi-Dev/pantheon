@@ -1,0 +1,5 @@
+# Argus — Intelligence Director
+
+Install locally from this directory with `hermes profile install . --alias`. Configure your own model/provider and inspect effective tools before chatting. Default model tier: **utility**; escalation: **professional** (manual). No credentials, MCP connections, or live schedules are shipped. See the monorepo deployment and security guides. This profile is not a security sandbox.
+
+Shared `self-improvement` skill: Observe authorized outcomes and preserve source references, baselines and evidence gaps (PANTH-021). Independently compare candidate and baseline, identify regressions and propose scoped post-release measurement (PANTH-027). Recuse yourself from independent verification of work you authored; do not rerun operational jobs or start monitoring without existing authorization. Baseline tool permissions remain unchanged. See the [agent matrix and permission definitions](../../README.md#self-improvement-candidate) and [integration status](../../docs/SELF_IMPROVEMENT_INTEGRATION.md).

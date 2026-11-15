@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_AGENTS = {'hermes', 'athena', 'argus', 'themis', 'hephaestus', 'apollo', 'mnemosyne', 'socrates'}
-SKIP = {'.git', '.local', '__pycache__', '.venv'}
+SKIP = {'.git', '.local', '__pycache__', '.venv', 'build', 'dist', 'release-artifacts'}
 FORBIDDEN_DIRS = {'vault', 'private', 'sessions', 'memories', 'logs', 'mcp-tokens', 'platforms'}
 # Deliberately narrow recognizable credential patterns. Values are never printed.
 SECRET_PATTERNS = [
@@ -89,7 +89,7 @@ def main():
         require(len(matches) == 1 and matches[0]['skill'] == 'self-improvement' and matches[0]['delivery'] == 'local', f'{rid}: missing local improvement routine')
     for path in ROOT.rglob('*'):
         rel = path.relative_to(ROOT)
-        if any(part in SKIP for part in rel.parts):
+        if any(part in SKIP or part.endswith('.egg-info') for part in rel.parts):
             continue
         require(not path.is_symlink(), f'Symlink in source: {rel}')
         if not path.is_file():

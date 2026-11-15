@@ -1,0 +1,2 @@
+# Reflection playbook
+For each authorized completed work item, identify the intended result, actual result, evidence references, failure or friction, and one actionable hypothesis. Record what went well, not only failures. Distinguish model, prompt, tool, environment, permission and handoff causes. Do not infer success from an agent's own claim. Group recurring observations by stable workflow/finding key, and link rather than recreate existing proposals. End with `no change`, `observe further`, or `propose`; missing data is a reason to defer, not fabricate a finding.

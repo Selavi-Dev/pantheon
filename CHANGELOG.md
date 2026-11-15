@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — installable technical preview
+
+- Builds on the 0.2.0 integrated source (self-improvement skill, routines, review workflow); nothing from 0.2.0 is removed.
+- Python wheel and source distribution (`pantheon-agent`) with bundled, synchronized profiles, 25 skills and registries.
+- Typer/Rich CLI: init, install, configure, doctor, status, update, backup, agents, groups, routines and version. Dry-run default, explicit native install, immutable staged source; never passes `--force` or `--yes`.
+- Six presets; eight standalone native distribution archives with artifact verification.
+- Ledger `show()` reads the handoff and its events in one snapshot (fixes an inconsistent read under concurrent approval).
+- UTF-8 is explicit for all repository text reads and writes; CI adds a Windows `PYTHONUTF8=0` run.
+- CI matrix: Linux, macOS and Windows on Python 3.10 and 3.12; build-only release workflow with no publish step.
+- Native Hermes runtime acceptance, hosting and production interoperability remain release gates.
+
 ## 0.2.0 — integrated source candidate
 
 - Shared self-improvement skill granted to all eight profiles, preserving existing roles, skills and baseline tool configurations.

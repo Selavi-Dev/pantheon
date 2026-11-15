@@ -1,0 +1,24 @@
+agent:
+  disabled_toolsets:
+  - terminal
+  - file
+  - browser
+  - code_execution
+  - cronjob
+  - computer_use
+  - discord
+  - discord_admin
+  - connections
+  - catalog
+  - kanban
+  - delegation
+  - project
+  - desktop_ui
+  - x_search
+  - video_gen
+  - image_gen
+gateway:
+  bot_loop_guard:
+    enabled: true
+    max_hops: 3
+    bot_replies_expect_reply: false

@@ -1,0 +1,15 @@
+include LICENSE README.md CHANGELOG.md SECURITY.md CONTRIBUTING.md
+recursive-include pantheon/resources * .gitignore
+recursive-include profiles * .gitignore
+recursive-include skills *
+recursive-include registry *.json *.md
+recursive-include governance *.md
+recursive-include schemas *.json
+recursive-include scripts *.py
+recursive-include tests *.py
+recursive-include docs *.md
+recursive-include examples *.json
+recursive-include routines *.yaml
+prune build
+prune dist
+prune .local

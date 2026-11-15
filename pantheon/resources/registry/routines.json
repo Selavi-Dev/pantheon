@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "timezone": "America/New_York",
+  "routines": [
+    {
+      "id": "H-01",
+      "owner": "hermes",
+      "purpose_key": "executive.morning-brief",
+      "schedule": "0 7 * * *",
+      "skill": "executive-brief",
+      "delivery": "telegram",
+      "enabled": false,
+      "prompt": "Read authorized agenda, commitments, decisions, Grokbot reports and Argus intelligence. Rank three priorities and flag missing/stale sources. No operational reruns. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "H-02",
+      "owner": "hermes",
+      "purpose_key": "executive.correspondence-triage",
+      "schedule": "0 9 * * 1-5",
+      "skill": "correspondence-triage",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Identify important correspondence, draft replies and identify obligations. Do not send. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "H-03",
+      "owner": "hermes",
+      "purpose_key": "executive.decision-review",
+      "schedule": "0 12 * * 1-5",
+      "skill": "decision-memo",
+      "delivery": "telegram",
+      "enabled": false,
+      "prompt": "Escalate new or changed pending decisions; [SILENT] if none. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "H-04",
+      "owner": "hermes",
+      "purpose_key": "executive.commitment-reconciliation",
+      "schedule": "0 17 * * *",
+      "skill": "commitment-register",
+      "delivery": "telegram",
+      "enabled": false,
+      "prompt": "Reconcile obligations, handoffs and deadlines; report exceptions only or [SILENT]. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "H-05",
+      "owner": "hermes",
+      "purpose_key": "executive.portfolio-review",
+      "schedule": "0 17 * * 5",
+      "skill": "executive-brief",
+      "delivery": "discord",
+      "enabled": false,
+      "prompt": "Consolidate portfolio reports, blockers, approvals and commitments. No operational reruns. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "H-06",
+      "owner": "hermes",
+      "purpose_key": "executive.week-planning",
+      "schedule": "0 16 * * 0",
+      "skill": "commitment-register",
+      "delivery": "telegram",
+      "enabled": false,
+      "prompt": "Review next week calendar, commitments and conflicts. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "H-07",
+      "owner": "hermes",
+      "purpose_key": "personal.administration",
+      "schedule": "0 18 * * 3",
+      "skill": "commitment-register",
+      "delivery": "signal",
+      "enabled": false,
+      "prompt": "Review private administrative obligations only; do not forward. [SILENT] if none. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "ATH-01",
+      "owner": "athena",
+      "purpose_key": "strategy.opportunity-analysis",
+      "schedule": "0 10 * * 1",
+      "skill": "opportunity-evaluation",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Evaluate one strategic opportunity using verified evidence. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "ATH-02",
+      "owner": "athena",
+      "purpose_key": "strategy.portfolio-assessment",
+      "schedule": "0 10 1 * *",
+      "skill": "strategic-analysis",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Review portfolio strategy and opportunity costs. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "ARG-01",
+      "owner": "argus",
+      "purpose_key": "intelligence.daily-public-digest",
+      "schedule": "0 6 * * *",
+      "skill": "intelligence-brief",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Collect new public intelligence. Deduplicate; do not monitor internal operations. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "ARG-02",
+      "owner": "argus",
+      "purpose_key": "intelligence.opportunity-discovery",
+      "schedule": "0 10 * * 3",
+      "skill": "opportunity-evaluation",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Discover relevant public opportunities, verify sources and deadlines. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "ARG-03",
+      "owner": "argus",
+      "purpose_key": "intelligence.priority-watchlist",
+      "schedule": "0 */6 * * *",
+      "skill": "intelligence-brief",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Check explicitly approved high-priority watchlist; [SILENT] when unchanged. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "THE-01",
+      "owner": "themis",
+      "purpose_key": "governance.weekly-audit",
+      "schedule": "0 15 * * 4",
+      "skill": "evidence-audit",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Audit authorized evidence and detect duplicate ownership or unsupported claims. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "THE-02",
+      "owner": "themis",
+      "purpose_key": "governance.release-review",
+      "schedule": null,
+      "skill": "release-governance",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Event-triggered review of material release or decision; verify independence. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "HEP-01",
+      "owner": "hephaestus",
+      "purpose_key": "engineering.invention-lab",
+      "schedule": "0 19 * * 2",
+      "skill": "engineering-spec",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Explore one engineering concept; return a spec, no execution. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "APO-01",
+      "owner": "apollo",
+      "purpose_key": "creative.concept-development",
+      "schedule": "0 11 * * 4",
+      "skill": "creative-brief",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Develop a creative concept aligned with approved brand direction; no publishing. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "MNE-01",
+      "owner": "mnemosyne",
+      "purpose_key": "knowledge.reconciliation",
+      "schedule": "0 23 * * *",
+      "skill": "memory-reconciliation",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Propose reconciliation of authorized knowledge records; no silent writes. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "MNE-02",
+      "owner": "mnemosyne",
+      "purpose_key": "knowledge.weekly-review",
+      "schedule": "0 9 * * 6",
+      "skill": "historical-source-analysis",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Review knowledge gaps and sources; report research targets. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "SOC-01",
+      "owner": "socrates",
+      "purpose_key": "learning.reasoning-exercise",
+      "schedule": "0 18 * * 2",
+      "skill": "argument-analysis",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Prepare a reasoning exercise complementary to existing education routines. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "SOC-02",
+      "owner": "socrates",
+      "purpose_key": "learning.cross-disciplinary-seminar",
+      "schedule": "0 11 * * 6",
+      "skill": "socratic-seminar",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Prepare a cross-disciplinary seminar; no duplicate study routine. Use only configured authorized sources; report unavailable inputs."
+    },
+    {
+      "id": "pantheon-self-improvement-daily",
+      "owner": "hermes",
+      "purpose_key": "self-improvement.daily-reflection",
+      "schedule": "30 20 * * *",
+      "skill": "self-improvement",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Review authorized completed administrative work since the last successful run. Request evidence from Argus, competing explanations from Socrates and Athena, and a draft lesson from Mnemosyne only within existing grants. Deduplicate against open proposals and Grokbot ownership. Return findings, evidence gaps and at most one draft candidate in one iteration. Use one designated scheduler and an idempotent run ID derived from routine ID and scheduled America/New_York occurrence; skip already recorded runs and missed occurrences, with no catch-up loops or automatic retries. Draft only; no operational execution, production edits, publishing, new schedules or external messages. Missing evidence or authorization ends the run; production changes require separate authenticated administrator approval of exact candidate digest and scope.",
+      "catch_up": false,
+      "grace_minutes": 0
+    },
+    {
+      "id": "pantheon-self-improvement-weekly",
+      "owner": "hermes",
+      "purpose_key": "self-improvement.weekly-review",
+      "schedule": "0 17 * * 0",
+      "skill": "self-improvement",
+      "delivery": "local",
+      "enabled": false,
+      "prompt": "Review open improvement proposals and verified evaluation evidence. Request independent comparison and regression evidence from Argus, governance findings from Themis, prioritization and challenges from Athena and Socrates, and a draft report from Apollo only within existing grants. Produce at most one decision packet and one draft candidate in one iteration, including rollback and evidence gaps. Deduplicate against open proposals, other routines and Grokbot ownership. Use one designated scheduler and an idempotent run ID derived from routine ID and scheduled America/New_York occurrence; skip already recorded runs and missed occurrences, with no catch-up loops or automatic retries. Local draft only; never approve on behalf of the administrator, deploy, send messages or execute Grokbot operations. Production changes require separate authenticated administrator approval of exact candidate digest and scope.",
+      "catch_up": false,
+      "grace_minutes": 0
+    }
+  ]
+}

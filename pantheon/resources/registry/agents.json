@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "id": "hermes",
+      "profile": "pantheon-hermes",
+      "role": "Chief of Staff",
+      "model_tier": "professional",
+      "escalation_tier": "reasoning",
+      "skills": [
+        "agent-handoff",
+        "commitment-register",
+        "correspondence-triage",
+        "decision-memo",
+        "executive-brief",
+        "executive-escalation",
+        "knowledge-capture",
+        "pantheon-governance",
+        "source-verification",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode",
+        "telegram",
+        "signal"
+      ]
+    },
+    {
+      "id": "athena",
+      "profile": "pantheon-athena",
+      "role": "Strategic Advisor",
+      "model_tier": "reasoning",
+      "escalation_tier": "independent-reasoning",
+      "skills": [
+        "agent-handoff",
+        "decision-memo",
+        "executive-escalation",
+        "knowledge-capture",
+        "opportunity-evaluation",
+        "pantheon-governance",
+        "source-verification",
+        "strategic-analysis",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode"
+      ]
+    },
+    {
+      "id": "argus",
+      "profile": "pantheon-argus",
+      "role": "Intelligence Director",
+      "model_tier": "utility",
+      "escalation_tier": "professional",
+      "skills": [
+        "agent-handoff",
+        "executive-escalation",
+        "intelligence-brief",
+        "knowledge-capture",
+        "pantheon-governance",
+        "source-verification",
+        "opportunity-evaluation",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode",
+        "telegram"
+      ]
+    },
+    {
+      "id": "themis",
+      "profile": "pantheon-themis",
+      "role": "Auditor General",
+      "model_tier": "independent-reasoning",
+      "escalation_tier": "independent-reasoning",
+      "skills": [
+        "agent-handoff",
+        "evidence-audit",
+        "executive-escalation",
+        "knowledge-capture",
+        "pantheon-governance",
+        "release-governance",
+        "source-verification",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode"
+      ]
+    },
+    {
+      "id": "hephaestus",
+      "profile": "pantheon-hephaestus",
+      "role": "Systems Architect",
+      "model_tier": "reasoning",
+      "escalation_tier": "independent-reasoning",
+      "skills": [
+        "agent-handoff",
+        "architecture-review",
+        "engineering-spec",
+        "executive-escalation",
+        "knowledge-capture",
+        "pantheon-governance",
+        "prototype-lab",
+        "source-verification",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode"
+      ]
+    },
+    {
+      "id": "apollo",
+      "profile": "pantheon-apollo",
+      "role": "Creative Director",
+      "model_tier": "creative-multimodal",
+      "escalation_tier": "professional",
+      "skills": [
+        "agent-handoff",
+        "brand-consistency",
+        "creative-brief",
+        "executive-escalation",
+        "knowledge-capture",
+        "pantheon-governance",
+        "source-verification",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode"
+      ]
+    },
+    {
+      "id": "mnemosyne",
+      "profile": "pantheon-mnemosyne",
+      "role": "Knowledge Archivist",
+      "model_tier": "professional",
+      "escalation_tier": "reasoning",
+      "skills": [
+        "agent-handoff",
+        "executive-escalation",
+        "historical-source-analysis",
+        "knowledge-capture",
+        "memory-reconciliation",
+        "pantheon-governance",
+        "source-verification",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode"
+      ]
+    },
+    {
+      "id": "socrates",
+      "profile": "pantheon-socrates",
+      "role": "Intellectual Advisor",
+      "model_tier": "professional",
+      "escalation_tier": "reasoning",
+      "skills": [
+        "agent-handoff",
+        "argument-analysis",
+        "executive-escalation",
+        "knowledge-capture",
+        "learning-curriculum",
+        "pantheon-governance",
+        "socratic-seminar",
+        "source-verification",
+        "self-improvement"
+      ],
+      "platforms": [
+        "discord",
+        "bot-mode",
+        "telegram"
+      ]
+    }
+  ]
+}

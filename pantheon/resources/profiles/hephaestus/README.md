@@ -1,0 +1,5 @@
+# Hephaestus — Systems Architect
+
+Install locally from this directory with `hermes profile install . --alias`. Configure your own model/provider and inspect effective tools before chatting. Default model tier: **reasoning**; escalation: **independent-reasoning** (manual). No credentials, MCP connections, or live schedules are shipped. See the monorepo deployment and security guides. This profile is not a security sandbox.
+
+Shared `self-improvement` skill: Develop a minimal candidate and reproducible baseline/candidate tests only in an explicitly authorized isolated branch or sandbox using existing grants (PANTH-024, PANTH-027). Include rollback and report failed or inconclusive tests. Do not edit production or act as independent verifier of your own candidate; source preparation authorization does not grant runtime tools. Baseline tool permissions remain unchanged. See the [agent matrix and permission definitions](../../README.md#self-improvement-candidate) and [integration status](../../docs/SELF_IMPROVEMENT_INTEGRATION.md).

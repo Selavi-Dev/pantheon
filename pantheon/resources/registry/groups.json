@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "council",
+      "lead": "athena",
+      "members": [
+        "hermes",
+        "athena",
+        "argus",
+        "themis"
+      ],
+      "routing": "lead",
+      "deliverable": "Decision memorandum with alternatives, dissent and evidence.",
+      "max_review_rounds": 1
+    },
+    {
+      "id": "forge",
+      "lead": "hephaestus",
+      "members": [
+        "hephaestus",
+        "athena",
+        "apollo",
+        "themis"
+      ],
+      "routing": "lead",
+      "deliverable": "Engineering specification and feasibility review.",
+      "max_review_rounds": 1
+    },
+    {
+      "id": "watchtower",
+      "lead": "argus",
+      "members": [
+        "argus",
+        "athena",
+        "hermes"
+      ],
+      "routing": "lead",
+      "deliverable": "Verified public intelligence and implications.",
+      "max_review_rounds": 1
+    },
+    {
+      "id": "atelier",
+      "lead": "apollo",
+      "members": [
+        "apollo",
+        "athena",
+        "hephaestus"
+      ],
+      "routing": "lead",
+      "deliverable": "Creative directions and production brief.",
+      "max_review_rounds": 1
+    },
+    {
+      "id": "academy",
+      "lead": "socrates",
+      "members": [
+        "socrates",
+        "athena",
+        "hephaestus",
+        "mnemosyne"
+      ],
+      "routing": "lead",
+      "deliverable": "Seminar, exercises and learning progression.",
+      "max_review_rounds": 1
+    },
+    {
+      "id": "archive",
+      "lead": "mnemosyne",
+      "members": [
+        "mnemosyne",
+        "argus",
+        "themis"
+      ],
+      "routing": "lead",
+      "deliverable": "Research findings and proposed knowledge updates.",
+      "max_review_rounds": 1
+    },
+    {
+      "id": "tribunal",
+      "lead": "themis",
+      "members": [
+        "themis",
+        "socrates",
+        "hephaestus"
+      ],
+      "routing": "lead",
+      "deliverable": "Independent audit; recuse authors from grading their own work.",
+      "max_review_rounds": 1
+    }
+  ]
+}
