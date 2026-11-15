@@ -78,9 +78,19 @@ class Ledger:
         return row
 
     def show(self,id):
-        row=dict(self._row(id)); row['payload']=json.loads(row['payload'])
-        row['events']=[dict(x) for x in self.conn.execute('SELECT * FROM events WHERE id=? ORDER BY seq',(id,))]
-        return row
+        owns_snapshot = not self.conn.in_transaction
+        if owns_snapshot:
+            self.conn.execute('BEGIN')
+        try:
+            row=dict(self._row(id)); row['payload']=json.loads(row['payload'])
+            row['events']=[dict(x) for x in self.conn.execute('SELECT * FROM events WHERE id=? ORDER BY seq',(id,))]
+            if owns_snapshot:
+                self.conn.execute('COMMIT')
+            return row
+        except BaseException:
+            if owns_snapshot and self.conn.in_transaction:
+                self.conn.execute('ROLLBACK')
+            raise
 
     def _transaction(self, operation):
         self.conn.execute('BEGIN IMMEDIATE')

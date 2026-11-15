@@ -39,6 +39,8 @@ flowchart TD
 
 Prerequisites: Python 3.10+, Git, a current Hermes Agent install with `hermes profile install` support, and your own model credentials. Install Hermes using its upstream instructions. No dependency installation or network calls are made by Pantheon's validation tools.
 
+Python's `zoneinfo` must be able to load `America/New_York`. On Windows, Python may need the IANA `tzdata` package in the chosen environment or an administrator-provided zoneinfo database via `PYTHONTZPATH`; verify this before running validation or the routine planner. Do not assume that the Windows system timezone supplies IANA data. The timezone database is an external prerequisite, not bundled by this candidate.
+
 ```bash
 python scripts/validate.py
 python -m unittest discover -s tests -v

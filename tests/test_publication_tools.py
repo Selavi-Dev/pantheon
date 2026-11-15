@@ -1,5 +1,6 @@
 """Regression checks for safe source preparation and complete skill bundles."""
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -39,6 +40,16 @@ class PublicationToolTests(unittest.TestCase):
         bundled = self.repo / 'profiles/hermes/skills/fixture-resource/references/check.md'
         self.assertTrue(bundled.is_file(), 'support file omitted from installed skill')
         self.assertEqual(bundled.read_text(), 'Retain this evidence checklist.\n')
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows legacy encoding regression')
+    def test_sync_with_windows_utf8_mode_disabled(self):
+        env = dict(os.environ, PYTHONUTF8='0')
+        env.pop('PYTHONIOENCODING', None)
+        result = subprocess.run([sys.executable, str(self.repo / 'scripts/sync_templates.py')],
+                                cwd=self.repo, env=env, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8', errors='replace'))
+        validation = self.run_script('validate.py', optimized=True)
+        self.assertEqual(validation.returncode, 0, validation.stderr)
 
     def test_validator_rejects_profile_drift_under_optimized_python(self):
         (self.repo / 'profiles/hermes/SOUL.md').write_text('Unreviewed replacement')
