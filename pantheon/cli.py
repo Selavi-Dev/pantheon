@@ -45,6 +45,17 @@ def routines():
     """Print inactive routine definitions; does not create jobs."""
     console.print_json(json.dumps(i.registry('routines')))
 
+GATEWAY_NOTE = ('A Hermes gateway is already running ({names}). Current Hermes multiplexes named profiles '
+                'from the default gateway, so profiles installed now may be served by it immediately. '
+                'Pantheon profiles ship no bot tokens or jobs; stop it first with `hermes gateway stop` '
+                'if nothing should be served.')
+
+def warn_running_gateway():
+    names = i.running_gateways()
+    if names:
+        console.print('Warning: ' + GATEWAY_NOTE.format(names=', '.join(names)), markup=False, style='yellow')
+    return names
+
 def install_plan(ids, apply, alias):
     for a in ids:
         command = ['hermes','profile','install', str(i.source_path(a))]
@@ -53,9 +64,14 @@ def install_plan(ids, apply, alias):
     if not apply:
         console.print('Plan only. No files staged or profiles installed. Use --apply to proceed.')
         return
+    warn_running_gateway()
     try: i.install_agents(ids, alias)
     except (OSError, RuntimeError, subprocess.SubprocessError) as exc: fail(exc)
     console.print('Native install commands completed. Configure models and review tools before starting agents.')
+    served = sorted(set(i.running_gateways()) & {i.profile_name(a) for a in ids})
+    if served:
+        console.print('Now served by a running gateway: ' + ', '.join(served) + '. Pantheon started no gateway; '
+                      'run `hermes gateway stop` or remove them from the multiplexer if unintended.', markup=False, style='yellow')
 
 @app.command()
 def install(preset: Optional[str] = None, agents: Optional[str] = None,
@@ -72,7 +88,7 @@ def init(preset: Optional[str] = None, apply: bool = typer.Option(False, '--appl
     ids = selection(preset, None)
     console.print('Selected: ' + ', '.join(ids))
     install_plan(ids, apply, False)
-    console.print('Next: pantheon configure --agent <id>; pantheon doctor. No gateways or routines started.')
+    console.print('Next: pantheon configure --agent <id>; pantheon doctor. Pantheon starts no gateways or routines.')
 
 @app.command()
 def doctor():
@@ -86,6 +102,7 @@ def doctor():
         result = i.run_native(['--version'], capture=True)
         console.print(result.stdout.strip() or result.stderr.strip(), markup=False)
         console.print('Hermes distribution command help checks passed. Live compatibility and permissions still require testing.')
+        warn_running_gateway()
     except (OSError, RuntimeError, subprocess.SubprocessError) as exc: fail(exc)
 
 @app.command()

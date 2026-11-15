@@ -9,6 +9,7 @@
 - Ledger `show()` reads the handoff and its events in one snapshot (fixes an inconsistent read under concurrent approval).
 - UTF-8 is explicit for all repository text reads and writes; CI adds a Windows `PYTHONUTF8=0` run.
 - CI matrix: Linux, macOS and Windows on Python 3.10 and 3.12; build-only release workflow with no publish step.
+- `doctor` and `install --apply` warn when a Hermes gateway is already running, since current Hermes may serve newly installed profiles from it; after install they list any Pantheon profiles now served.
 - Native Hermes runtime acceptance, hosting and production interoperability remain release gates.
 
 ## 0.2.0 — integrated source candidate

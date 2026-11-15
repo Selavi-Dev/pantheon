@@ -48,7 +48,7 @@ pantheon configure --agent hermes --apply   # native setup
 pantheon status
 ```
 
-All eight profile resources, including the shared self-improvement skill, ship inside the wheel. Presets and commands are documented in [Installable release](https://github.com/Selavi-Dev/pantheon/blob/main/docs/installable-release.md), including upgrade and backup caveats. Existing Hermes profiles are not replaced automatically. No gateways or routines activate during installation.
+All eight profile resources, including the shared self-improvement skill, ship inside the wheel. Presets and commands are documented in [Installable release](https://github.com/Selavi-Dev/pantheon/blob/main/docs/installable-release.md), including upgrade and backup caveats. Existing Hermes profiles are not replaced automatically. Pantheon starts no gateways or routines. If a Hermes gateway is already running, current Hermes may serve newly installed profiles from it at once; `pantheon doctor` and `pantheon install` warn when that applies (Pantheon profiles ship no bot tokens or jobs).
 
 ## Quick start (source checkout)
 

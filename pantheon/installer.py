@@ -1,6 +1,7 @@
 """Native Hermes adapter. No force, silent confirmation, or gateway activation."""
 from pathlib import Path
 import json
+import re
 import os
 import shutil
 import subprocess
@@ -64,6 +65,26 @@ def executable():
 def run_native(args, capture=False):
     return subprocess.run([executable(), *args], check=True, text=True, encoding='utf-8', errors='replace',
                           capture_output=capture, timeout=30 if capture else None)
+
+_ROW = re.compile(r'^\s*[\u25c6*]?\s*(\S+)\s.*\brunning\b')
+
+def running_gateways():
+    """Profiles whose gateway Hermes reports as running, parsed from `hermes profile list`.
+
+    Best effort: returns [] when Hermes is missing or the output is unrecognised. A running
+    default gateway in current Hermes multiplexes named profiles, so a profile installed while
+    it runs can be served at once (no bot token in Pantheon profiles, so no platform connects).
+    """
+    try:
+        out = run_native(['profile', 'list'], capture=True).stdout or ''
+    except (OSError, RuntimeError, subprocess.SubprocessError):
+        return []
+    names = []
+    for line in out.splitlines():
+        m = _ROW.match(line)
+        if m and m.group(1).lower() != 'profile':
+            names.append(m.group(1))
+    return names
 
 def require_distributions():
     run_native(['profile', 'install', '--help'], capture=True)
