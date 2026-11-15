@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def reviewed_state():
-    records = [json.loads((ROOT / 'examples' / f'self-improvement-{kind}.json').read_text())
+    records = [json.loads((ROOT / 'examples' / f'self-improvement-{kind}.json').read_text(encoding='utf-8'))
                for kind in ('proposal', 'evaluation', 'review')]
     proposal, evaluation, review = records
     proposal['evidence_refs'] = ['test:observation']
@@ -55,13 +55,13 @@ class ImprovementHardeningTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             state_path, decision_path = Path(temp) / 'state.json', Path(temp) / 'decision.json'
             original = json.dumps(state)
-            state_path.write_text(original)
-            decision_path.write_text(json.dumps(decision))
+            state_path.write_text(original, encoding='utf-8')
+            decision_path.write_text(json.dumps(decision), encoding='utf-8')
             with contextlib.redirect_stderr(io.StringIO()), contextlib.redirect_stdout(io.StringIO()):
                 with self.assertRaises(SystemExit) as stopped:
                     si.main(['--state', str(state_path), 'approve', proposal['id'], str(decision_path)])
             self.assertEqual(stopped.exception.code, 2)
-            self.assertEqual(state_path.read_text(), original)
+            self.assertEqual(state_path.read_text(encoding='utf-8'), original)
 
     def test_valid_state_remains_valid_when_json_object_keys_are_reordered(self):
         state, proposal = reviewed_state()

@@ -5,7 +5,7 @@ from pantheon.ledger import Ledger
 ROOT=Path(__file__).resolve().parents[1]
 class LedgerTest(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory(); self.path=Path(self.tmp.name)/'ledger.sqlite'; self.l=Ledger(self.path); self.p=json.loads((ROOT/'examples/handoff.json').read_text()); self.id=self.p['handoff_id']
+        self.tmp=tempfile.TemporaryDirectory(); self.path=Path(self.tmp.name)/'ledger.sqlite'; self.l=Ledger(self.path); self.p=json.loads((ROOT/'examples/handoff.json').read_text(encoding='utf-8')); self.id=self.p['handoff_id']
     def tearDown(self): self.l.close(); self.tmp.cleanup()
     def approve(self):
         d=self.l.propose(self.p)['digest']; return self.l.approve(self.id,d,'operator',60)

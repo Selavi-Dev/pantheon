@@ -16,6 +16,6 @@ def main():
         for f in resources.rglob('*'):
             if f.is_file(): assert prefix+'/pantheon/resources/'+f.relative_to(resources).as_posix() in names,f
     files=sorted(x for x in a.dist.rglob('*') if x.is_file() and x.name!='SHA256SUMS')
-    (a.dist/'SHA256SUMS').write_text(''.join(f'{hashlib.sha256(x.read_bytes()).hexdigest()}  {x.relative_to(a.dist).as_posix()}\n' for x in files))
+    (a.dist/'SHA256SUMS').write_text(''.join(f'{hashlib.sha256(x.read_bytes()).hexdigest()}  {x.relative_to(a.dist).as_posix()}\n' for x in files), encoding='utf-8', newline='\n')
     print('Wheel and sdist resource verification passed.')
 if __name__=='__main__': main()

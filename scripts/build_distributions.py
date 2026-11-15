@@ -11,7 +11,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     out = args.output.resolve(); out.mkdir(parents=True, exist_ok=True)
-    agents = json.loads((ROOT/'registry/agents.json').read_text())['agents']
+    agents = json.loads((ROOT/'registry/agents.json').read_text(encoding='utf-8'))['agents']
     targets = [(a, out/(a['profile']+'.zip')) for a in agents]
     if any(p.exists() for _,p in targets) or (out/'SHA256SUMS').exists():
         raise SystemExit('Output already contains generated files; use a fresh directory.')
@@ -23,6 +23,6 @@ def main():
                 if f.is_symlink(): raise RuntimeError(f'Symlink refused: {f}')
                 if f.is_file(): z.write(f,f.relative_to(root).as_posix())
         sums.append(f'{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.name}')
-    (out/'SHA256SUMS').write_text('\n'.join(sums)+'\n')
+    (out/'SHA256SUMS').write_text('\n'.join(sums)+'\n', encoding='utf-8', newline='\n')
     print(f'Generated {len(targets)} native distribution archives in {out}. Extract before local Hermes installation.')
 if __name__=='__main__': main()

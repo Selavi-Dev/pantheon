@@ -62,7 +62,7 @@ def executable():
     return path
 
 def run_native(args, capture=False):
-    return subprocess.run([executable(), *args], check=True, text=True,
+    return subprocess.run([executable(), *args], check=True, text=True, encoding='utf-8', errors='replace',
                           capture_output=capture, timeout=30 if capture else None)
 
 def require_distributions():

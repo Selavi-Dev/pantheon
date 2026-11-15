@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 def main():
-    agents=json.loads((ROOT/'registry/agents.json').read_text())['agents']
+    agents=json.loads((ROOT/'registry/agents.json').read_text(encoding='utf-8'))['agents']
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--agent',action='append',choices=[x['id'] for x in agents]); p.add_argument('--apply',action='store_true')
     a=p.parse_args()

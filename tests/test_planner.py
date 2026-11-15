@@ -3,7 +3,7 @@ from pathlib import Path
 from scripts.plan_routines import plan
 ROOT=Path(__file__).resolve().parents[1]
 class PlannerTest(unittest.TestCase):
-    def setUp(self): self.reg=json.loads((ROOT/'registry/routines.json').read_text())
+    def setUp(self): self.reg=json.loads((ROOT/'registry/routines.json').read_text(encoding='utf-8'))
     def test_paused_local(self):
         lines,conflicts=plan(self.reg,{'routines':[]}); self.assertEqual(len(lines),21); self.assertFalse(conflicts); self.assertTrue(all('--paused' in x and '--deliver local' in x for x in lines))
     def test_equivalent_purpose(self):

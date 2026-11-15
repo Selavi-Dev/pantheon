@@ -28,18 +28,18 @@ class PublicationToolTests(unittest.TestCase):
     def test_sync_copies_skill_support_files(self):
         # A bundled skill must retain the local resources referenced by SKILL.md.
         agents_path = self.repo / 'registry/agents.json'
-        agents = json.loads(agents_path.read_text())
+        agents = json.loads(agents_path.read_text(encoding='utf-8'))
         agents['agents'][0]['skills'].append('fixture-resource')
-        agents_path.write_text(json.dumps(agents))
+        agents_path.write_text(json.dumps(agents), encoding='utf-8')
         skill = self.repo / 'skills/fixture-resource'
         (skill / 'references').mkdir(parents=True)
-        (skill / 'SKILL.md').write_text('Read references/check.md')
-        (skill / 'references/check.md').write_text('Retain this evidence checklist.\n')
+        (skill / 'SKILL.md').write_text('Read references/check.md', encoding='utf-8')
+        (skill / 'references/check.md').write_text('Retain this evidence checklist.\n', encoding='utf-8')
         result = self.run_script('sync_templates.py')
         self.assertEqual(result.returncode, 0, result.stderr)
         bundled = self.repo / 'profiles/hermes/skills/fixture-resource/references/check.md'
         self.assertTrue(bundled.is_file(), 'support file omitted from installed skill')
-        self.assertEqual(bundled.read_text(), 'Retain this evidence checklist.\n')
+        self.assertEqual(bundled.read_text(encoding='utf-8'), 'Retain this evidence checklist.\n')
 
     @unittest.skipUnless(os.name == 'nt', 'Windows legacy encoding regression')
     def test_sync_with_windows_utf8_mode_disabled(self):
@@ -52,12 +52,12 @@ class PublicationToolTests(unittest.TestCase):
         self.assertEqual(validation.returncode, 0, validation.stderr)
 
     def test_validator_rejects_profile_drift_under_optimized_python(self):
-        (self.repo / 'profiles/hermes/SOUL.md').write_text('Unreviewed replacement')
+        (self.repo / 'profiles/hermes/SOUL.md').write_text('Unreviewed replacement', encoding='utf-8')
         result = self.run_script('validate.py', optimized=True)
         self.assertNotEqual(result.returncode, 0, result.stdout)
 
     def test_validator_rejects_private_environment_variants(self):
-        (self.repo / '.env.production').write_text('EXAMPLE_ONLY=fixture\n')
+        (self.repo / '.env.production').write_text('EXAMPLE_ONLY=fixture\n', encoding='utf-8')
         result = self.run_script('validate.py', optimized=True)
         self.assertNotEqual(result.returncode, 0, result.stdout)
 

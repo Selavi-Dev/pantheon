@@ -179,7 +179,7 @@ def main():
         if action in ('complete','verify'): a.add_argument('--evidence',required=True)
     args=p.parse_args(); l=Ledger(args.db)
     try:
-        if args.action=='propose': result=l.propose(json.loads(Path(args.file).read_text()))
+        if args.action=='propose': result=l.propose(json.loads(Path(args.file).read_text(encoding='utf-8')))
         else:
             kw={k:v for k,v in vars(args).items() if k not in ('db','action','id')}
             result=getattr(l,args.action)(args.id,**kw)

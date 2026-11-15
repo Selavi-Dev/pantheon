@@ -28,9 +28,9 @@ class CLITests(unittest.TestCase):
             dest = i.stage('athena')
             self.assertEqual(i.stage('athena'), dest)
             self.assertEqual(i.tree_bytes(dest), i.tree_bytes(i.RESOURCES/'profiles'/'athena'))
-            (dest/'SOUL.md').write_text('local edit')
+            (dest/'SOUL.md').write_text('local edit', encoding='utf-8')
             with self.assertRaises(RuntimeError): i.stage('athena')
-            self.assertEqual((dest/'SOUL.md').read_text(),'local edit')
+            self.assertEqual((dest/'SOUL.md').read_text(encoding='utf-8'),'local edit')
     def test_native_install_no_force_or_auto_confirm(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'PANTHEON_HOME':tmp}), patch.object(i,'run_native') as native:
             result = self.runner.invoke(app,['install','--agents','athena','--apply','--alias'])
@@ -63,11 +63,11 @@ class CLITests(unittest.TestCase):
             native.assert_called_once_with(['profile','info','pantheon-hermes'])
     def test_backup_refuses_overwrite(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(i,'run_native') as native:
-            path=Path(tmp)/'snapshot.tar.gz'; path.write_text('existing')
+            path=Path(tmp)/'snapshot.tar.gz'; path.write_text('existing', encoding='utf-8')
             result=self.runner.invoke(app,['backup','--agent','athena','--output',str(path),'--apply'])
             self.assertEqual(result.exit_code,1,result.output)
             native.assert_not_called()
-            self.assertEqual(path.read_text(),'existing')
+            self.assertEqual(path.read_text(encoding='utf-8'),'existing')
     def test_invalid_selection(self):
         result=self.runner.invoke(app,['install','--agents','../../bad'])
         self.assertEqual(result.exit_code,1,result.output)

@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def fixture(name):
-    return json.loads((ROOT / 'examples' / f'self-improvement-{name}.json').read_text())
+    return json.loads((ROOT / 'examples' / f'self-improvement-{name}.json').read_text(encoding='utf-8'))
 
 
 class ImprovementTests(unittest.TestCase):
@@ -129,7 +129,7 @@ class ImprovementTests(unittest.TestCase):
     def test_export_no_overwrite(self):
         with tempfile.TemporaryDirectory() as temp:
             path = si.export_lesson(self.state, self.pid, Path(temp))
-            self.assertIn('not a validated production outcome', path.read_text())
+            self.assertIn('not a validated production outcome', path.read_text(encoding='utf-8'))
             with self.assertRaises(FileExistsError):
                 si.export_lesson(self.state, self.pid, Path(temp))
 

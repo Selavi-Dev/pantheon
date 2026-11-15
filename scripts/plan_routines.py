@@ -31,10 +31,10 @@ def plan(reg,inventory,only=None,timezone=None):
     return lines,conflicts
 
 def main():
-    reg=json.loads((ROOT/'registry/routines.json').read_text())
+    reg=json.loads((ROOT/'registry/routines.json').read_text(encoding='utf-8'))
     p=argparse.ArgumentParser(description=__doc__); p.add_argument('--inventory',required=True); p.add_argument('--routine',action='append',choices=[x['id'] for x in reg['routines']]); p.add_argument('--timezone')
     a=p.parse_args()
-    try: lines,conflicts=plan(reg,json.loads(Path(a.inventory).read_text()),a.routine,a.timezone)
+    try: lines,conflicts=plan(reg,json.loads(Path(a.inventory).read_text(encoding='utf-8')),a.routine,a.timezone)
     except (ValueError,OSError,KeyError) as e: p.error(str(e))
     for c in conflicts: print('# BLOCKED: existing ID or reserved equivalent purpose:',c)
     for l in lines: print(l)
