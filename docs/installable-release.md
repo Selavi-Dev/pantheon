@@ -8,7 +8,7 @@ Install upstream Hermes first, with profile-distribution support. Use `hermes pr
 python -m venv .venv
 # Linux/macOS: source .venv/bin/activate
 # PowerShell: .\.venv\Scripts\Activate.ps1
-python -m pip install /path/to/pantheon_agent-0.3.0-py3-none-any.whl
+python -m pip install /path/to/olympus_pantheon-0.3.0-py3-none-any.whl
 pantheon version
 pantheon init --preset executive
 pantheon doctor
@@ -17,7 +17,7 @@ pantheon configure --agent hermes --apply
 pantheon status
 ```
 
-The local wheel requires the dependencies declared in pyproject.toml; pip can download them from an index. It is not an offline dependency bundle. `uv tool install /path/to/wheel.whl` or `pipx install /path/to/wheel.whl` are alternatives. The provisional name `pantheon-agent` has not been reserved or published on PyPI.
+The local wheel requires the dependencies declared in pyproject.toml; pip can download them from an index. It is not an offline dependency bundle. `uv tool install /path/to/wheel.whl` or `pipx install /path/to/wheel.whl` are alternatives. The provisional name `olympus-pantheon` has not been reserved or published on PyPI.
 
 `init` and `install` default to dry-run. `--apply` stages immutable, versioned distribution sources under `~/.pantheon/distributions/0.3.0/` (override with `PANTHEON_HOME`) and invokes native Hermes with confirmation. Keep this source directory available for native profile updates. If a profile name exists, Hermes must refuse installation without force; no force flag is sent. If an install sequence fails, earlier successful profiles may remain; inspect status rather than blindly retrying. Optional `--alias` asks Hermes to create profile aliases. Pantheon starts no routine, gateway, or external integration. However, current Hermes multiplexes named profiles from a running default gateway: if one is running, newly installed profiles may be served by it immediately. `pantheon doctor` and `pantheon install --apply` warn before installing and list any Pantheon profiles served afterwards. Pantheon profiles ship no bot tokens or jobs, so nothing connects until you add platform credentials; run `hermes -p default gateway stop` first if nothing should be served. Native setup is interactive and may offer other configuration; review choices and skip gateways until authorized.
 

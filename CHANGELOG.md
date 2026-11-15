@@ -3,7 +3,7 @@
 ## 0.3.0 — installable technical preview
 
 - Builds on the 0.2.0 integrated source (self-improvement skill, routines, review workflow); nothing from 0.2.0 is removed.
-- Python wheel and source distribution (`pantheon-agent`) with bundled, synchronized profiles, 25 skills and registries.
+- Python wheel and source distribution (`olympus-pantheon`; the CLI command and import package stay `pantheon`) with bundled, synchronized profiles, 25 skills and registries.
 - Typer/Rich CLI: init, install, configure, doctor, status, update, backup, agents, groups, routines and version. Dry-run default, explicit native install, immutable staged source; never passes `--force` or `--yes`.
 - Six presets; eight standalone native distribution archives with artifact verification.
 - Ledger `show()` reads the handoff and its events in one snapshot (fixes an inconsistent read under concurrent approval).
