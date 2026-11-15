@@ -10,8 +10,8 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{ name = "Overflow Studios" }]
-maintainers = [{ name = "Overflow Studios" }]
+authors = [{ name = "Tyler Cromartie" }]
+maintainers = [{ name = "Tyler Cromartie" }]
 keywords = ["hermes-agent", "ai-agents", "agent-profiles", "governance", "cli"]
 classifiers = [
   "Development Status :: 3 - Alpha",
