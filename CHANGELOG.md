@@ -10,7 +10,9 @@
 - UTF-8 is explicit for all repository text reads and writes; CI adds a Windows `PYTHONUTF8=0` run.
 - CI matrix: Linux, macOS and Windows on Python 3.10 and 3.12; build-only release workflow with no publish step.
 - `doctor` and `install --apply` warn when a Hermes gateway is already running, since current Hermes may serve newly installed profiles from it; after install they list any Pantheon profiles now served.
-- Native Hermes runtime acceptance, hosting and production interoperability remain release gates.
+- Live Hermes acceptance on Linux and Windows WSL2; macOS is covered by CI only.
+- TestPyPI rehearsal workflow (`publish-testpypi.yml`, manual) alongside the PyPI trusted-publishing workflow.
+- Hosting and production interoperability remain release gates.
 
 ## 0.2.0 — integrated source candidate
 
