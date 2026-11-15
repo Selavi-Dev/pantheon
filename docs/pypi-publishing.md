@@ -13,7 +13,7 @@ Status: prepared, not performed. Nothing has been uploaded. `pantheon-agent` was
    Issues = "https://github.com/<owner>/<repo>/issues"
    Changelog = "https://github.com/<owner>/<repo>/blob/main/CHANGELOG.md"
    ```
-2. On pypi.org, under the publishing account, add a **pending trusted publisher** for project `pantheon-agent`: owner `<owner>`, repository `<repo>`, workflow `publish.yml`, environment `pypi`. This reserves the name for that workflow without uploading anything.
+2. On pypi.org, under the publishing account, add a **pending trusted publisher** for project `pantheon-agent`: owner `<owner>`, repository `<repo>`, workflow `publish.yml`, environment `pypi`. This does **not** reserve the name: PyPI only claims it on the first successful upload, and the pending publisher is invalidated if someone else registers `pantheon-agent` first ([PyPI docs](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/)). The only way to hold the name is to publish a release.
 3. In the GitHub repository, create environment `pypi` with required reviewers (at least the owner) and restrict it to release tags.
 4. Optional rehearsal: repeat steps 2–3 on test.pypi.org with environment `testpypi`, and point a copy of the workflow at `repository-url: https://test.pypi.org/legacy/`.
 
