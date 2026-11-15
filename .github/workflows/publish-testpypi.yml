@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/pantheon-agent
+      url: https://test.pypi.org/p/olympus-pantheon
     permissions:
       id-token: write
       attestations: write
@@ -62,12 +62,12 @@ jobs:
           version=$(basename "$wheel" | cut -d- -f2)
           for i in 1 2 3 4 5 6 7 8; do
             if python -m pip download --no-deps --only-binary :all: --index-url https://test.pypi.org/simple/ \
-                 "pantheon-agent==$version" -d fetched/; then break; fi
+                 "olympus-pantheon==$version" -d fetched/; then break; fi
             sleep 30
           done
           test -f "fetched/$(basename "$wheel")"
           cmp "$wheel" "fetched/$(basename "$wheel")"
-          echo "TestPyPI serves the exact wheel this run built (pantheon-agent $version)."
+          echo "TestPyPI serves the exact wheel this run built (olympus-pantheon $version)."
       - name: Install that wheel file (dependencies from PyPI) and run the CLI
         run: |
           python -m pip install fetched/*.whl

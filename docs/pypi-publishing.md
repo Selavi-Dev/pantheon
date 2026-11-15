@@ -1,6 +1,6 @@
 # PyPI publishing
 
-Status: prepared, not performed. Nothing has been uploaded. `pantheon-agent` was unclaimed on PyPI when checked on 2026-11-14; the plain name `pantheon` belongs to an unrelated project. Package names and released versions on PyPI are permanent: a deleted version can never be re-uploaded.
+Status: prepared, not performed. Nothing has been uploaded. `olympus-pantheon` (chosen 2026-11-15, replacing the earlier working name `pantheon-agent`) was unclaimed on PyPI when checked that day; the plain name `pantheon` belongs to an unrelated project. Package names and released versions on PyPI are permanent: a deleted version can never be re-uploaded.
 
 ## One-time setup (owner)
 
@@ -13,9 +13,9 @@ Status: prepared, not performed. Nothing has been uploaded. `pantheon-agent` was
    Issues = "https://github.com/Selavi-Dev/pantheon/issues"
    Changelog = "https://github.com/Selavi-Dev/pantheon/blob/main/CHANGELOG.md"
    ```
-2. On pypi.org, under the publishing account, add a **pending trusted publisher** for project `pantheon-agent`: owner `Selavi-Dev`, repository `pantheon`, workflow `publish.yml`, environment `pypi`. This does **not** reserve the name: PyPI only claims it on the first successful upload, and the pending publisher is invalidated if someone else registers `pantheon-agent` first ([PyPI docs](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/)). The only way to hold the name is to publish a release.
+2. On pypi.org, under the publishing account, add a **pending trusted publisher** for project `olympus-pantheon`: owner `Selavi-Dev`, repository `pantheon`, workflow `publish.yml`, environment `pypi`. This does **not** reserve the name: PyPI only claims it on the first successful upload, and the pending publisher is invalidated if someone else registers `olympus-pantheon` first ([PyPI docs](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/)). The only way to hold the name is to publish a release.
 3. In the GitHub repository, create environment `pypi` with required reviewers (at least the owner) and restrict it to release tags.
-4. Rehearsal (decided 2026-11-15): on test.pypi.org add a pending trusted publisher for `pantheon-agent` with owner `Selavi-Dev`, repository `pantheon`, workflow `publish-testpypi.yml`, environment `testpypi`; create a protected `testpypi` environment in GitHub. Then run **Publish to TestPyPI (rehearsal)** from Actions. It builds, uploads, then installs the package back from TestPyPI and runs the CLI. A version uploaded to TestPyPI cannot be uploaded there again.
+4. Rehearsal (decided 2026-11-15): on test.pypi.org add a pending trusted publisher for `olympus-pantheon` with owner `Selavi-Dev`, repository `pantheon`, workflow `publish-testpypi.yml`, environment `testpypi`; create a protected `testpypi` environment in GitHub. Then run **Publish to TestPyPI (rehearsal)** from Actions. It builds, uploads, then installs the package back from TestPyPI and runs the CLI. A version uploaded to TestPyPI cannot be uploaded there again.
 
 ## Each release
 
