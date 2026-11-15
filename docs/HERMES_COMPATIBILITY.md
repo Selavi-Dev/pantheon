@@ -24,6 +24,12 @@ First live run against a real Hermes runtime, in a disposable Linux home directo
 | `pantheon backup` | Export created with mode 0600; no `.env` or `auth.json` inside. |
 | `hermes_requires` | `>=0.23.1` accepted on 0.23.1; `>=0.24.0` refused with a clear error. |
 
+### WSL acceptance (2026-11-15)
+
+Windows 11 WSL2 (kernel 6.18), Ubuntu 26.04, Python 3.14, Hermes `v0.23.1 (2026.9.24)` from the official installer, throwaway Linux user `pantheontest`. Release wheel checksum verified; `doctor` passed; all eight profiles installed with native confirmation and `Requires: Hermes >=0.23.1`; no cron jobs; tool deny-list effective; self-improvement skill files present; re-install refused without `--force`; backup contains no credentials.
+
+**Finding: gateway multiplexing.** The test user's default profile had a running gateway from Hermes setup, and `profile list` then showed `pantheon-hermes` as served by it. Reproduced on Linux with an unconfigured `hermes gateway run`: the default gateway served all eight Pantheon profiles. Pantheon starts nothing, but a profile installed while a default gateway runs can be served immediately. Pantheon profiles contain no bot tokens or jobs, so no platform connects. Since 0.3.0, `pantheon doctor` and `pantheon install --apply` warn when a gateway is running and list Pantheon profiles served after install. Stop the gateway (`hermes -p default gateway stop`) before installing when nothing should be served.
+
 Caveats: a shallow (`--depth 1`) Hermes clone has no release tags and reports base version `unknown`; Hermes then refuses every distribution that sets `hermes_requires`. Official installs are blobless with tags and are unaffected. Not tested: macOS, native Windows/WSL, Docker or Nix Hermes builds, model setup (`pantheon configure`), live chat, gateways, Bot Mode, Obsidian, or a tagged Hermes release package.
 
 ## Findings and required follow-up

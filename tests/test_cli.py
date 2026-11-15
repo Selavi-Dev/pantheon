@@ -35,8 +35,10 @@ class CLITests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'PANTHEON_HOME':tmp}), patch.object(i,'run_native') as native:
             result = self.runner.invoke(app,['install','--agents','athena','--apply','--alias'])
             self.assertEqual(result.exit_code,0,result.output)
-            self.assertEqual(native.call_args.args[0], ['profile','install',str(i.source_path('athena')),'--alias'])
-            self.assertEqual(native.call_count,3)
+            calls=[c.args[0] for c in native.call_args_list]
+            self.assertIn(['profile','install',str(i.source_path('athena')),'--alias'], calls)
+            self.assertEqual([c for c in calls if c[:2]==['profile','install'] and c[2:3]!=['--help']], [['profile','install',str(i.source_path('athena')),'--alias']])
+            self.assertFalse(any('--force' in c or '--yes' in c or '-y' in c for c in calls))
     def test_native_failure_propagates(self):
         with patch.object(i,'run_native',side_effect=subprocess.CalledProcessError(2,['hermes'])):
             result=self.runner.invoke(app,['install','--agents','athena','--apply'])
@@ -89,3 +91,59 @@ class BundledResourceTests(unittest.TestCase):
         for agent in i.PRESETS['full']:
             manifest = (i.RESOURCES/'profiles'/agent/'distribution.yaml').read_text(encoding='utf-8')
             self.assertIn(f'version: {__version__}\n', manifest)
+
+
+PROFILE_LIST = """
+ Profile          Model                        Gateway      Alias        Distribution
+ \u2500\u2500\u2500\u2500\u2500\u2500\u2500    \u2500\u2500\u2500\u2500    \u2500\u2500\u2500\u2500
+ \u25c6default         anthropic/claude-opus-4.6    running      \u2014            \u2014
+  pantheon-athena \u2014                            stopped      \u2014            pantheon-athena@0.3.0
+  pantheon-hermes \u2014                            running      \u2014            pantheon-hermes@0.3.0
+"""
+
+class GatewayWarningTests(unittest.TestCase):
+    def setUp(self): self.runner = CliRunner()
+    def fake(self, output):
+        def run(args, capture=False):
+            return subprocess.CompletedProcess(args, 0, stdout=output if args == ['profile','list'] else 'hermes 0.23.1', stderr='')
+        return run
+    def test_parses_running_profiles(self):
+        with patch.object(i, 'run_native', side_effect=self.fake(PROFILE_LIST)):
+            self.assertEqual(i.running_gateways(), ['default', 'pantheon-hermes'])
+    def test_alias_named_running_is_not_a_running_gateway(self):
+        out = "  pantheon-athena \u2014                            stopped      running      pantheon-athena@0.3.0\n"
+        with patch.object(i, 'run_native', side_effect=self.fake(out)):
+            self.assertEqual(i.running_gateways(), [])
+    def test_display_name_rows_use_canonical_id(self):
+        out = (" \u25c6Profile (default) anthropic/claude-opus-4.6    running      \u2014            \u2014\n"
+               "  Chief Of Staff (pantheon-hermes) \u2014           running      \u2014            pantheon-hermes@0.3.0\n"
+               "  pantheon-athena \u2014                            stopped      \u2014            pantheon-athena@0.3.0\n")
+        with patch.object(i, 'run_native', side_effect=self.fake(out)):
+            self.assertEqual(i.running_gateways(), ['default', 'pantheon-hermes'])
+    def test_warning_targets_the_default_host(self):
+        with patch.object(i, 'run_native', side_effect=self.fake(PROFILE_LIST)):
+            result = self.runner.invoke(app, ['doctor'])
+            self.assertIn('hermes -p default gateway stop', ' '.join(result.output.split()))
+    def test_no_hermes_means_no_warning(self):
+        with patch.object(i, 'run_native', side_effect=RuntimeError('Hermes CLI not found')):
+            self.assertEqual(i.running_gateways(), [])
+    def test_apply_warns_before_and_reports_served_after(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'PANTHEON_HOME': tmp}), \
+             patch.object(i, 'run_native', side_effect=self.fake(PROFILE_LIST)):
+            result = self.runner.invoke(app, ['install', '--agents', 'hermes,athena', '--apply'])
+            self.assertEqual(result.exit_code, 0, result.output)
+            out = ' '.join(result.output.split())
+            self.assertIn('A Hermes gateway is already running (default, pantheon-hermes)', out)
+            self.assertIn('Now served by a running gateway: pantheon-hermes', out)
+    def test_quiet_when_nothing_runs(self):
+        quiet = PROFILE_LIST.replace('running', 'stopped')
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'PANTHEON_HOME': tmp}), \
+             patch.object(i, 'run_native', side_effect=self.fake(quiet)):
+            result = self.runner.invoke(app, ['install', '--agents', 'athena', '--apply'])
+            self.assertEqual(result.exit_code, 0, result.output)
+            self.assertNotIn('gateway is already running', result.output)
+    def test_doctor_warns(self):
+        with patch.object(i, 'run_native', side_effect=self.fake(PROFILE_LIST)):
+            result = self.runner.invoke(app, ['doctor'])
+            self.assertEqual(result.exit_code, 0, result.output)
+            self.assertIn('already running', ' '.join(result.output.split()))

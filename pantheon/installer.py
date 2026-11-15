@@ -1,6 +1,7 @@
 """Native Hermes adapter. No force, silent confirmation, or gateway activation."""
 from pathlib import Path
 import json
+import re
 import os
 import shutil
 import subprocess
@@ -64,6 +65,41 @@ def executable():
 def run_native(args, capture=False):
     return subprocess.run([executable(), *args], check=True, text=True, encoding='utf-8', errors='replace',
                           capture_output=capture, timeout=30 if capture else None)
+
+_LABELLED = re.compile(r'^(?P<display>.+?) \((?P<id>[^()\s]+)\)\s+(?P<rest>.*)$')
+
+def _parse_profile_row(line):
+    """(profile_id, gateway_state) for one `hermes profile list` row, else None.
+
+    Hermes prints ` <marker><label> <model> <gateway> <alias> <distribution>`, where the label is
+    the bare id or `display name (id)`. Only the Gateway column is read, never the alias.
+    """
+    body = line.strip().lstrip('\u25c6*').strip()
+    if not body or body.startswith('\u2500') or body.split()[:3] == ['Profile', 'Model', 'Gateway']:
+        return None
+    m = _LABELLED.match(body)
+    if m:
+        pid, rest = m.group('id'), m.group('rest').split()
+    else:
+        parts = body.split()
+        pid, rest = parts[0], parts[1:]
+    if len(rest) < 2 or rest[1] not in ('running', 'stopped'):
+        return None
+    return pid, rest[1]
+
+def running_gateways():
+    """Profile ids whose gateway Hermes reports as running, parsed from `hermes profile list`.
+
+    Best effort: returns [] when Hermes is missing or the output is unrecognised. A running
+    default gateway in current Hermes multiplexes named profiles, so a profile installed while
+    it runs can be served at once (no bot token in Pantheon profiles, so no platform connects).
+    """
+    try:
+        out = run_native(['profile', 'list'], capture=True).stdout or ''
+    except (OSError, RuntimeError, subprocess.SubprocessError):
+        return []
+    rows = (_parse_profile_row(line) for line in out.splitlines())
+    return [pid for pid, state in filter(None, rows) if state == 'running']
 
 def require_distributions():
     run_native(['profile', 'install', '--help'], capture=True)
