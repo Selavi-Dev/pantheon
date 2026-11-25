@@ -177,3 +177,13 @@ class NativeErrorReportingTests(unittest.TestCase):
             result = self.runner.invoke(app, ['install', '--agents', 'athena', '--apply'])
         self.assertEqual(result.exit_code, 1, result.output)
         self.assertIn('usage: hermes', result.output)
+
+    def test_stderr_survives_verbose_stdout(self):
+        usage = '\n'.join(f'usage line {n}' for n in range(30))
+        err = subprocess.CalledProcessError(1, ['hermes'], output=usage, stderr='real reason: profile store locked')
+        with patch.object(i, 'run_native', side_effect=err):
+            result = self.runner.invoke(app, ['doctor'])
+        out = ' '.join(result.output.split())
+        self.assertIn('real reason: profile store locked', out)
+        self.assertIn('usage line 29', out)
+        self.assertNotIn('usage line 0 ', out)

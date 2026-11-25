@@ -111,7 +111,7 @@ def check_native(args):
     try:
         return run_native(args, capture=True)
     except subprocess.CalledProcessError as exc:
-        detail = _tail((exc.stderr or '') + '\n' + (exc.stdout or ''))
+        detail = '\n'.join(part for part in (_tail(exc.stderr, 10), _tail(exc.stdout, 4)) if part)
         raise RuntimeError(f'`{shown}` failed with exit code {exc.returncode}'
                            + (f'. Hermes reported:\n{detail}' if detail else ' and printed nothing.')) from exc
     except subprocess.TimeoutExpired as exc:
