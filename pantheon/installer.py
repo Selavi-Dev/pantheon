@@ -101,9 +101,25 @@ def running_gateways():
     rows = (_parse_profile_row(line) for line in out.splitlines())
     return [pid for pid, state in filter(None, rows) if state == 'running']
 
+def _tail(text, lines=12):
+    kept = [line for line in (text or '').splitlines() if line.strip()]
+    return '\n'.join(kept[-lines:])
+
+def check_native(args):
+    """Run a read-only Hermes command; on failure raise RuntimeError carrying Hermes's own output."""
+    shown = 'hermes ' + ' '.join(args)
+    try:
+        return run_native(args, capture=True)
+    except subprocess.CalledProcessError as exc:
+        detail = _tail((exc.stderr or '') + '\n' + (exc.stdout or ''))
+        raise RuntimeError(f'`{shown}` failed with exit code {exc.returncode}'
+                           + (f'. Hermes reported:\n{detail}' if detail else ' and printed nothing.')) from exc
+    except subprocess.TimeoutExpired as exc:
+        raise RuntimeError(f'`{shown}` did not finish within {exc.timeout:g} seconds.') from exc
+
 def require_distributions():
-    run_native(['profile', 'install', '--help'], capture=True)
-    run_native(['profile', 'update', '--help'], capture=True)
+    check_native(['profile', 'install', '--help'])
+    check_native(['profile', 'update', '--help'])
 
 def install_agents(agents, alias=False):
     require_distributions()

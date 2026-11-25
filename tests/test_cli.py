@@ -147,3 +147,33 @@ class GatewayWarningTests(unittest.TestCase):
             result = self.runner.invoke(app, ['doctor'])
             self.assertEqual(result.exit_code, 0, result.output)
             self.assertIn('already running', ' '.join(result.output.split()))
+
+
+class NativeErrorReportingTests(unittest.TestCase):
+    def setUp(self): self.runner = CliRunner()
+    def test_doctor_shows_hermes_error_output(self):
+        err = subprocess.CalledProcessError(1, ['hermes', 'profile', 'install', '--help'],
+                                            output='', stderr='Traceback ...\nModuleNotFoundError: No module named example')
+        with patch.object(i, 'run_native', side_effect=err):
+            result = self.runner.invoke(app, ['doctor'])
+        out = ' '.join(result.output.split())
+        self.assertEqual(result.exit_code, 1, result.output)
+        self.assertIn('`hermes profile install --help` failed with exit code 1', out)
+        self.assertIn('No module named example', out)
+    def test_silent_failure_says_so(self):
+        err = subprocess.CalledProcessError(1, ['hermes'], output='', stderr='')
+        with patch.object(i, 'run_native', side_effect=err):
+            result = self.runner.invoke(app, ['doctor'])
+        self.assertIn('printed nothing', ' '.join(result.output.split()))
+    def test_timeout_is_reported(self):
+        with patch.object(i, 'run_native', side_effect=subprocess.TimeoutExpired(['hermes'], 30)):
+            result = self.runner.invoke(app, ['doctor'])
+        self.assertEqual(result.exit_code, 1, result.output)
+        self.assertIn('did not finish within 30 seconds', ' '.join(result.output.split()))
+    def test_install_preflight_reports_hermes_output(self):
+        err = subprocess.CalledProcessError(2, ['hermes'], output='usage: hermes ...', stderr='')
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'PANTHEON_HOME': tmp}), \
+             patch.object(i, 'run_native', side_effect=err):
+            result = self.runner.invoke(app, ['install', '--agents', 'athena', '--apply'])
+        self.assertEqual(result.exit_code, 1, result.output)
+        self.assertIn('usage: hermes', result.output)
