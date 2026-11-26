@@ -170,6 +170,18 @@ class NativeErrorReportingTests(unittest.TestCase):
             result = self.runner.invoke(app, ['doctor'])
         self.assertEqual(result.exit_code, 1, result.output)
         self.assertIn('did not finish within 30 seconds', ' '.join(result.output.split()))
+    def test_timeout_shows_what_hermes_printed(self):
+        # subprocess.run hands back a timeout's partial output as bytes, even with text=True.
+        err = subprocess.TimeoutExpired(['hermes'], 30, output=b'loading profiles\n',
+                                        stderr=b'stalled: waiting for profile store lock\n')
+        with patch.object(i, 'run_native', side_effect=err):
+            result = self.runner.invoke(app, ['doctor'])
+        out = ' '.join(result.output.split())
+        self.assertEqual(result.exit_code, 1, result.output)
+        self.assertIn('did not finish within 30 seconds', out)
+        self.assertIn('stalled: waiting for profile store lock', out)
+        self.assertIn('loading profiles', out)
+        self.assertNotIn("b'", out)
     def test_install_preflight_reports_hermes_output(self):
         err = subprocess.CalledProcessError(2, ['hermes'], output='usage: hermes ...', stderr='')
         with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ, {'PANTHEON_HOME': tmp}), \
