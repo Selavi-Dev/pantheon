@@ -99,7 +99,7 @@ def doctor():
                 if not (i.RESOURCES/'profiles'/a/f).is_file(): raise RuntimeError(f'Missing resource: {a}/{f}')
         console.print(f'Pantheon {__version__}: eight profile bundles present.')
         i.require_distributions()
-        result = i.run_native(['--version'], capture=True)
+        result = i.check_native(['--version'])
         console.print(result.stdout.strip() or result.stderr.strip(), markup=False)
         console.print('Hermes distribution command help checks passed. Live compatibility and permissions still require testing.')
         warn_running_gateway()

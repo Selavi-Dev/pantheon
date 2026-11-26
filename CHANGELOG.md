@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `doctor` and the install pre-flight show Hermes's own error output (last lines of stderr/stdout) when a Hermes check fails or times out, instead of only an exit status. Found in the WSL acceptance run of the PyPI package.
+
 ## 0.3.0 — installable technical preview
 
 - Builds on the 0.2.0 integrated source (self-improvement skill, routines, review workflow); nothing from 0.2.0 is removed.
