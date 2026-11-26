@@ -102,8 +102,14 @@ def running_gateways():
     return [pid for pid, state in filter(None, rows) if state == 'running']
 
 def _tail(text, lines=12):
+    # A timeout's partial output is bytes even under text=True, so decode it the way run_native would.
+    if isinstance(text, bytes): text = text.decode('utf-8', errors='replace')
     kept = [line for line in (text or '').splitlines() if line.strip()]
     return '\n'.join(kept[-lines:])
+
+def _captured(exc):
+    """Last lines of what a failed or timed-out command printed: stderr first, so stdout cannot crowd it out."""
+    return '\n'.join(part for part in (_tail(exc.stderr, 10), _tail(exc.stdout, 4)) if part)
 
 def check_native(args):
     """Run a read-only Hermes command; on failure raise RuntimeError carrying Hermes's own output."""
@@ -111,11 +117,13 @@ def check_native(args):
     try:
         return run_native(args, capture=True)
     except subprocess.CalledProcessError as exc:
-        detail = '\n'.join(part for part in (_tail(exc.stderr, 10), _tail(exc.stdout, 4)) if part)
+        detail = _captured(exc)
         raise RuntimeError(f'`{shown}` failed with exit code {exc.returncode}'
                            + (f'. Hermes reported:\n{detail}' if detail else ' and printed nothing.')) from exc
     except subprocess.TimeoutExpired as exc:
-        raise RuntimeError(f'`{shown}` did not finish within {exc.timeout:g} seconds.') from exc
+        detail = _captured(exc)
+        raise RuntimeError(f'`{shown}` did not finish within {exc.timeout:g} seconds'
+                           + (f'. Before stalling, Hermes printed:\n{detail}' if detail else '.')) from exc
 
 def require_distributions():
     check_native(['profile', 'install', '--help'])
