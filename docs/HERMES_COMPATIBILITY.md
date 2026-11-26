@@ -30,6 +30,15 @@ Windows 11 WSL2 (kernel 6.18), Ubuntu 26.04, Python 3.14, Hermes `v0.23.1 (2026.
 
 **Finding: gateway multiplexing.** The test user's default profile had a running gateway from Hermes setup, and `profile list` then showed `pantheon-hermes` as served by it. Reproduced on Linux with an unconfigured `hermes gateway run`: the default gateway served all eight Pantheon profiles. Pantheon starts nothing, but a profile installed while a default gateway runs can be served immediately. Pantheon profiles contain no bot tokens or jobs, so no platform connects. Since 0.3.0, `pantheon doctor` and `pantheon install --apply` warn when a gateway is running and list Pantheon profiles served after install. Stop the gateway (`hermes -p default gateway stop`) before installing when nothing should be served.
 
+### PyPI package acceptance (2026-11-25 to 2026-11-26)
+
+The published package, `pip install olympus-pantheon==0.3.0`, installed into a fresh virtual environment and tested with no credentials, models, gateways started or Obsidian.
+
+- **Linux** (disposable home): `doctor`, install of all eight profiles, effective tool deny-list, re-install refusal, native update preserving user data, and a credential-free backup all passed.
+- **WSL**: Windows 11 WSL2 (kernel 6.18), Ubuntu 26.04, Python 3.14, Hermes `v0.23.1 (2026.9.24)` from the official installer, user `pantheontest`, with separate `HERMES_HOME` and `PANTHEON_HOME`. All eight profiles installed with native confirmation; no cron jobs; deny-list effective; self-improvement files present; re-install refused without `--force`; native update kept a user memory file; backup contains no credentials. `pantheon doctor` passed against the account's normal Hermes home.
+
+**Finding: a brand-new Hermes home refuses non-install commands.** With `HERMES_HOME` pointing at an empty directory, Hermes refuses commands such as `hermes --version` and `hermes profile install --help` with `no dependency environment is committed for this install; run hermes pm repair` (exit 1). `hermes profile install <source>` still works there, and once a profile is installed the same commands succeed. This is Hermes behaviour, not Pantheon's. Pointing `HOME` (rather than `HERMES_HOME`) at an empty directory produces the same refusal, because the official installer records its dependency environment under the account's real home. Pantheon 0.3.0's `doctor` reported this only as a bare exit status; since the change after 0.3.0, `doctor` and the install pre-flight show Hermes's own message, including the `hermes pm repair` hint.
+
 Caveats: a shallow (`--depth 1`) Hermes clone has no release tags and reports base version `unknown`; Hermes then refuses every distribution that sets `hermes_requires`. Official installs are blobless with tags and are unaffected. Not tested live: macOS (CI only; decided 2026-11-15 to release without a live macOS run), native Windows outside WSL, Docker or Nix Hermes builds, model setup (`pantheon configure`), live chat, gateways, Bot Mode, Obsidian, or a tagged Hermes release package.
 
 ## Findings and required follow-up
